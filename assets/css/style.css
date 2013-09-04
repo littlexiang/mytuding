@@ -1,0 +1,45 @@
+body{
+    max-width: 640px;
+}
+.container {
+    /*max-width: 616px;*/
+    /*padding: 0;*/
+}
+
+.datetime {
+    color: #999;
+}
+.photo-content{
+    margin-bottom: 10px;
+}
+
+.photo-content dt {
+    width: 70px;
+    float: left;
+    clear: left;
+    overflow: hidden;
+}
+
+.photo-content dd {
+    margin-left: 75px;
+}
+
+.comment-list dt {
+    width: 40px;
+    float: left;
+    clear: left;
+    overflow: hidden;
+}
+
+.comment-list dd {
+    margin-left: 40px;
+}
+
+.photo-detail-wrapper {
+    /*box-shadow: 0 8px 6px -6px black;*/
+}
+
+/*.photo-wrapper {*/
+    /*min-width: 616px;*/
+    /*min-height: 616px;*/
+/*}*/
