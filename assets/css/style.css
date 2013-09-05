@@ -1,45 +1,68 @@
-body{
+html{
     max-width: 640px;
 }
+body {
+    margin: 10px auto;
+}
+
+dl{
+    margin-bottom: 1em;
+    margin-top:1em;
+}
+
+h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
 .container {
-    /*max-width: 616px;*/
-    /*padding: 0;*/
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.dropdown-menu{
+    min-width: 60px;
+    font-size: 12px;
 }
 
 .datetime {
     color: #999;
+    font-style: oblique;
+    font-size: 12px;
 }
-.photo-content{
-    margin-bottom: 10px;
+
+.photo-content {
 }
 
 .photo-content dt {
-    width: 70px;
+    width: 64px;
     float: left;
-    clear: left;
     overflow: hidden;
 }
 
 .photo-content dd {
-    margin-left: 75px;
+    margin-left: 70px;
 }
 
 .comment-list dt {
-    width: 40px;
+    width: 48px;
     float: left;
-    clear: left;
     overflow: hidden;
 }
 
 .comment-list dd {
-    margin-left: 40px;
+    margin-left: 54px;
 }
 
 .photo-detail-wrapper {
-    /*box-shadow: 0 8px 6px -6px black;*/
+    border: 1px solid #ccc;
+    box-shadow: 0 8px 6px -6px #ccc;
+    width: 100%;
+    margin: 0 auto 1.5em auto;
+    padding: 6px;
 }
 
 /*.photo-wrapper {*/
-    /*min-width: 616px;*/
-    /*min-height: 616px;*/
+/*min-width: 616px;*/
+/*min-height: 616px;*/
 /*}*/

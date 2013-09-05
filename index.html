@@ -3,56 +3,41 @@
 <head>
     <title>MyTuding</title>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="littlexiang<littlexiang521@gmail.com>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/jquery-1.9.1.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/app.js"></script>
+    <link rel="stylesheet" href="assets/css/path-menu.css">
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/jqtouch-jquery.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <script src="assets/js/handlebars.js"></script>
+    <script src="assets/js/templates.js"></script>
+    <script src="assets/js/client.js"></script>
 </head>
 <body>
-<div class="container" style="margin-top:20px;">
-    <div>
-        <form onsubmit="return false;">
-            <label>图钉帐号<input type="text" name="username"></label>
-            <label>密码<input type="password" name="password"></label>
-            <input type="submit" class="btn btn-primary" value="登录" onclick="op.login(this.form);">
-        </form>
+
+<div class="container">
+    <div id="page-index">
+
+    </div>
+    <div style="z-index: 9999;">
+        <input type="checkbox" id="menu" class="menuControl" checked="checked"> <!-- Hidden -->
+        <label for="menu">
+            <div class="circle-container">
+                <button class="circle">&#10006;</button>
+            </div>
+        </label>
+        <ul class="items">
+            <li><span class="glyphicon glyphicon-cog"></span></li>
+            <li><span class="glyphicon glyphicon-picture"></span></li>
+            <li><span class="glyphicon glyphicon-camera"></span></li>
+            <li><span class="glyphicon glyphicon-comment"></span></li>
+            <li><span class="glyphicon glyphicon-search"></span></li>
+        </ul>
     </div>
 
-    <div class="photo-detail-wrapper">
-        <div class="photo-wrapper">
-            <img class="img-responsive" width="616"
-                 src="http://www1.gypsii.com.cn/attachments/v467/60921467/111/1377183720111.jpg">
-        </div>
-        <dl class="photo-content clearfix">
-            <dt><img src="http://www1.gypsii.com.cn/attachments/v467/60921467/account/icon_64.jpg?t=1377098838"></dt>
-            <dd>
-                <h5>劣头翔-SH</h5>
-                <span class="datetime">一天前</span>
-            </dd>
-        </dl>
-        <div>
-            <p>
-                我们经常怀揣各种大梦想，要去改变世界，要加入大公司，领导大团队，开发牛气的不得了的产品…
-                但这些，离开了细节都玩不转。当然，你可以跟我说细节不是最关键的，我不想讨论那些，我想说的是，我们就是要做好细节。摘自今天的小道消息。各个细节不好好打磨甚至经不起推敲的产品，注定被人抛弃。
-                #科技 #生活
-            </p>
-        </div>
-        <div class="clearfix">
-            <div class="photo-ops pull-right btn-group btn-group-sm">
-                <a href="#" class="btn btn-default">评论(12)</a>
-                <a href="#" class="btn btn-default">喜欢(40)</a>
-                <a href="#" class="btn btn-default">转发</a>
-            </div>
-        </div>
-        <dl class="comment-list">
-            <dt><img src="http://www1.gypsii.com.cn/attachments/v797/4920797/account/icon_32.jpg?t=1373340799"></dt>
-            <dd>老钉 回复了@劣头翔-SH : 本是随意调侃却引起美女关注。美女都跑了，我们还要什么细节。睡觉。明天全力以赴力求一切完美。[傻笑][傻笑][傻笑]</dd>
-        </dl>
-    </div>
 </div>
 </body>
 </html>
