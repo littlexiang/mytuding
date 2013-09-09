@@ -7,30 +7,24 @@ var templates = {
         <dt><img src="{{User.thumbnail_url}}" class="img-responsive"></dt>\
         <dd>\
             <h5>{{User.display_name}} <span class="datetime pull-right">{{UTCConvert create_time}}</span></h5>\
-            <p>{{&title}}<br />{{#each tag_new}}<a href="#">#{{this}}</a> &nbsp;{{/each}}</p>\
+            <p>{{&title}} &nbsp;{{#each tag_new}}<a href="#">#{{this}}</a> &nbsp;{{/each}}</p>\
         </dd>\
     </dl>\
-    <div class="clearfix">\
-        <div class="pull-left btn-group btn-group-sm">\
-            <a href="#" class="btn btn-default">评论({{comment_count}})</a>\
-            <a href="#" class="btn btn-default">喜欢({{good_count}})</a>\
-        </div>\
-        <div class="pull-right btn-group btn-group-sm dropup">\
-            <button class="btn btn-default">…</button>\
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>\
-            <ul class="dropdown-menu">\
-                <li><a href="#" class="">转发</a></li>\
-                <li><a href="#" class="">收藏</a></li>\
-            </ul>\
-        </div>\
+    <div class="photo-comment-list">\
+        {{#Comments.list}}\
+        <dl class="comment clearfix">\
+            <dt><img src="{{User.thumbnail_url}}" class="img-responsive"></dt>\
+            <dd>{{User.display_name}} {{&content}}</dd>\
+        </dl>\
+        {{/Comments.list}}\
     </div>\
-    {{#Comments.list}}\
-    <dl class="comment-list clearfix">\
-        <dt><img src="{{User.thumbnail_url}}" class="img-responsive"></dt>\
-        <dd>{{User.display_name}} {{&content}}\
-        </dd>\
-    </dl>\
-    {{/Comments.list}}\
+    <div class="photo-ops clearfix">\
+        <div class="pull-left btn-group btn-group-sm">\
+            <a href="#" class="btn btn-default">喜欢({{good_count}})</a>\
+            <a href="#" class="btn btn-default">评论({{comment_count}})</a>\
+        </div>\
+        <button class="btn btn-sm btn-default pull-right">…</button>\
+    </div>\
 </div>\
 {{/list}}'
 };

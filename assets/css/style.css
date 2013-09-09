@@ -1,13 +1,15 @@
-html{
+html {
     max-width: 640px;
 }
+
 body {
     margin: 10px auto;
 }
 
-dl{
-    margin-bottom: 1em;
-    margin-top:1em;
+dl {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0.6em 0.5em;
 }
 
 h4, h5, h6 {
@@ -20,7 +22,7 @@ h4, h5, h6 {
     padding-right: 5px;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     min-width: 60px;
     font-size: 12px;
 }
@@ -32,6 +34,9 @@ h4, h5, h6 {
 }
 
 .photo-content {
+    border: 1px solid #ccc;
+    border-top: 0 none;
+    box-shadow: 0 2px 4px 0 #ccc;
 }
 
 .photo-content dt {
@@ -44,22 +49,37 @@ h4, h5, h6 {
     margin-left: 70px;
 }
 
-.comment-list dt {
+.photo-detail-wrapper {
+    margin: 0 auto 1.5em auto;
+}
+
+.photo-wrapper {
+    width: 100%;
+    padding: 6px 6px 0 6px;
+    border: 1px solid #ccc;
+    border-bottom: 0 none;
+}
+
+.photo-ops {
+    margin-top: 10px;
+}
+
+.photo-comment-list .comment:last-child {
+    border-bottom: 0 none;
+}
+
+.comment {
+    border-bottom: 1px solid #ccc;
+}
+
+.comment dt {
     width: 48px;
     float: left;
     overflow: hidden;
 }
 
-.comment-list dd {
+.comment dd {
     margin-left: 54px;
-}
-
-.photo-detail-wrapper {
-    border: 1px solid #ccc;
-    box-shadow: 0 8px 6px -6px #ccc;
-    width: 100%;
-    margin: 0 auto 1.5em auto;
-    padding: 6px;
 }
 
 /*.photo-wrapper {*/
