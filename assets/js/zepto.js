@@ -1,5 +1,4 @@
-/* Zepto v1.0-1-ga3cab6c - polyfill zepto detect event ajax form fx - zeptojs.com/license */
-
+/* Zepto 1.0 - polyfill zepto detect event ajax form fx fx_methods data assets selector touch - zeptojs.com/license */
 
 ;(function(undefined){
   if (String.prototype.trim === undefined) // fix for iOS 3.2
@@ -33,6 +32,10 @@
     }
 
 })()
+
+
+
+
 
 var Zepto = (function() {
   var undefined, key, $, classList, emptyArray = [], slice = emptyArray.slice, filter = emptyArray.filter,
@@ -817,8 +820,13 @@ var Zepto = (function() {
   return $
 })()
 
+
 window.Zepto = Zepto
 '$' in window || (window.$ = Zepto)
+
+
+
+
 
 ;(function($){
   function detect(ua){
@@ -871,6 +879,10 @@ window.Zepto = Zepto
   $.__detect = detect
 
 })(Zepto)
+
+
+
+
 
 ;(function($){
   var $$ = $.zepto.qsa, handlers = {}, _zid = 1, specialEvents={},
@@ -1116,6 +1128,10 @@ window.Zepto = Zepto
   }
 
 })(Zepto)
+
+
+
+
 
 ;(function($){
   var jsonpID = 0,
@@ -1428,6 +1444,10 @@ window.Zepto = Zepto
   }
 })(Zepto)
 
+
+
+
+
 ;(function ($) {
   $.fn.serializeArray = function () {
     var result = [], el
@@ -1464,6 +1484,10 @@ window.Zepto = Zepto
   }
 
 })(Zepto)
+
+
+
+
 
 ;(function($, undefined){
   var prefix = '', eventPrefix, endEventName, endAnimationName,
@@ -1562,4 +1586,364 @@ window.Zepto = Zepto
   }
 
   testEl = null
+})(Zepto)
+
+
+
+
+
+;(function($, undefined){
+  var document = window.document, docElem = document.documentElement,
+    origShow = $.fn.show, origHide = $.fn.hide, origToggle = $.fn.toggle
+
+  function anim(el, speed, opacity, scale, callback) {
+    if (typeof speed == 'function' && !callback) callback = speed, speed = undefined
+    var props = { opacity: opacity }
+    if (scale) {
+      props.scale = scale
+      el.css($.fx.cssPrefix + 'transform-origin', '0 0')
+    }
+    return el.animate(props, speed, null, callback)
+  }
+
+  function hide(el, speed, scale, callback) {
+    return anim(el, speed, 0, scale, function(){
+      origHide.call($(this))
+      callback && callback.call(this)
+    })
+  }
+
+  $.fn.show = function(speed, callback) {
+    origShow.call(this)
+    if (speed === undefined) speed = 0
+    else this.css('opacity', 0)
+    return anim(this, speed, 1, '1,1', callback)
+  }
+
+  $.fn.hide = function(speed, callback) {
+    if (speed === undefined) return origHide.call(this)
+    else return hide(this, speed, '0,0', callback)
+  }
+
+  $.fn.toggle = function(speed, callback) {
+    if (speed === undefined || typeof speed == 'boolean')
+      return origToggle.call(this, speed)
+    else return this.each(function(){
+      var el = $(this)
+      el[el.css('display') == 'none' ? 'show' : 'hide'](speed, callback)
+    })
+  }
+
+  $.fn.fadeTo = function(speed, opacity, callback) {
+    return anim(this, speed, opacity, null, callback)
+  }
+
+  $.fn.fadeIn = function(speed, callback) {
+    var target = this.css('opacity')
+    if (target > 0) this.css('opacity', 0)
+    else target = 1
+    return origShow.call(this).fadeTo(speed, target, callback)
+  }
+
+  $.fn.fadeOut = function(speed, callback) {
+    return hide(this, speed, null, callback)
+  }
+
+  $.fn.fadeToggle = function(speed, callback) {
+    return this.each(function(){
+      var el = $(this)
+      el[
+        (el.css('opacity') == 0 || el.css('display') == 'none') ? 'fadeIn' : 'fadeOut'
+      ](speed, callback)
+    })
+  }
+
+})(Zepto)
+
+
+
+
+
+
+
+;(function($) {
+  var data = {}, dataAttr = $.fn.data, camelize = $.camelCase,
+    exp = $.expando = 'Zepto' + (+new Date())
+
+  // Get value from node:
+  // 1. first try key as given,
+  // 2. then try camelized key,
+  // 3. fall back to reading "data-*" attribute.
+  function getData(node, name) {
+    var id = node[exp], store = id && data[id]
+    if (name === undefined) return store || setData(node)
+    else {
+      if (store) {
+        if (name in store) return store[name]
+        var camelName = camelize(name)
+        if (camelName in store) return store[camelName]
+      }
+      return dataAttr.call($(node), name)
+    }
+  }
+
+  // Store value under camelized key on node
+  function setData(node, name, value) {
+    var id = node[exp] || (node[exp] = ++$.uuid),
+      store = data[id] || (data[id] = attributeData(node))
+    if (name !== undefined) store[camelize(name)] = value
+    return store
+  }
+
+  // Read all "data-*" attributes from a node
+  function attributeData(node) {
+    var store = {}
+    $.each(node.attributes, function(i, attr){
+      if (attr.name.indexOf('data-') == 0)
+        store[camelize(attr.name.replace('data-', ''))] =
+          $.zepto.deserializeValue(attr.value)
+    })
+    return store
+  }
+
+  $.fn.data = function(name, value) {
+    return value === undefined ?
+      // set multiple values via object
+      $.isPlainObject(name) ?
+        this.each(function(i, node){
+          $.each(name, function(key, value){ setData(node, key, value) })
+        }) :
+        // get value from first element
+        this.length == 0 ? undefined : getData(this[0], name) :
+      // set value on all elements
+      this.each(function(){ setData(this, name, value) })
+  }
+
+  $.fn.removeData = function(names) {
+    if (typeof names == 'string') names = names.split(/\s+/)
+    return this.each(function(){
+      var id = this[exp], store = id && data[id]
+      if (store) $.each(names, function(){ delete store[camelize(this)] })
+    })
+  }
+})(Zepto)
+
+
+
+
+
+;(function($){
+  var cache = [], timeout
+
+  $.fn.remove = function(){
+    return this.each(function(){
+      if(this.parentNode){
+        if(this.tagName === 'IMG'){
+          cache.push(this)
+          this.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+          if (timeout) clearTimeout(timeout)
+          timeout = setTimeout(function(){ cache = [] }, 60000)
+        }
+        this.parentNode.removeChild(this)
+      }
+    })
+  }
+})(Zepto)
+
+;(function($){
+  var zepto = $.zepto, oldQsa = zepto.qsa, oldMatches = zepto.matches
+
+  function visible(elem){
+    elem = $(elem)
+    return !!(elem.width() || elem.height()) && elem.css("display") !== "none"
+  }
+
+  // Implements a subset from:
+  // http://api.jquery.com/category/selectors/jquery-selector-extensions/
+  //
+  // Each filter function receives the current index, all nodes in the
+  // considered set, and a value if there were parentheses. The value
+  // of `this` is the node currently being considered. The function returns the
+  // resulting node(s), null, or undefined.
+  //
+  // Complex selectors are not supported:
+  //   li:has(label:contains("foo")) + li:has(label:contains("bar"))
+  //   ul.inner:first > li
+  var filters = $.expr[':'] = {
+    visible:  function(){ if (visible(this)) return this },
+    hidden:   function(){ if (!visible(this)) return this },
+    selected: function(){ if (this.selected) return this },
+    checked:  function(){ if (this.checked) return this },
+    parent:   function(){ return this.parentNode },
+    first:    function(idx){ if (idx === 0) return this },
+    last:     function(idx, nodes){ if (idx === nodes.length - 1) return this },
+    eq:       function(idx, _, value){ if (idx === value) return this },
+    contains: function(idx, _, text){ if ($(this).text().indexOf(text) > -1) return this },
+    has:      function(idx, _, sel){ if (zepto.qsa(this, sel).length) return this }
+  }
+
+  var filterRe = new RegExp('(.*):(\\w+)(?:\\(([^)]+)\\))?$\\s*'),
+      childRe  = /^\s*>/,
+      classTag = 'Zepto' + (+new Date())
+
+  function process(sel, fn) {
+    // quote the hash in `a[href^=#]` expression
+    sel = sel.replace(/=#\]/g, '="#"]')
+    var filter, arg, match = filterRe.exec(sel)
+    if (match && match[2] in filters) {
+      filter = filters[match[2]], arg = match[3]
+      sel = match[1]
+      if (arg) {
+        var num = Number(arg)
+        if (isNaN(num)) arg = arg.replace(/^["']|["']$/g, '')
+        else arg = num
+      }
+    }
+    return fn(sel, filter, arg)
+  }
+
+  zepto.qsa = function(node, selector) {
+    return process(selector, function(sel, filter, arg){
+      try {
+        var taggedParent
+        if (!sel && filter) sel = '*'
+        else if (childRe.test(sel))
+          // support "> *" child queries by tagging the parent node with a
+          // unique class and prepending that classname onto the selector
+          taggedParent = $(node).addClass(classTag), sel = '.'+classTag+' '+sel
+
+        var nodes = oldQsa(node, sel)
+      } catch(e) {
+        console.error('error performing selector: %o', selector)
+        throw e
+      } finally {
+        if (taggedParent) taggedParent.removeClass(classTag)
+      }
+      return !filter ? nodes :
+        zepto.uniq($.map(nodes, function(n, i){ return filter.call(n, i, nodes, arg) }))
+    })
+  }
+
+  zepto.matches = function(node, selector){
+    return process(selector, function(sel, filter, arg){
+      return (!sel || oldMatches(node, sel)) &&
+        (!filter || filter.call(node, null, arg) === node)
+    })
+  }
+})(Zepto)
+
+
+
+
+
+;(function($){
+  var touch = {},
+    touchTimeout, tapTimeout, swipeTimeout,
+    longTapDelay = 750, longTapTimeout
+
+  function parentIfText(node) {
+    return 'tagName' in node ? node : node.parentNode
+  }
+
+  function swipeDirection(x1, x2, y1, y2) {
+    var xDelta = Math.abs(x1 - x2), yDelta = Math.abs(y1 - y2)
+    return xDelta >= yDelta ? (x1 - x2 > 0 ? 'Left' : 'Right') : (y1 - y2 > 0 ? 'Up' : 'Down')
+  }
+
+  function longTap() {
+    longTapTimeout = null
+    if (touch.last) {
+      touch.el.trigger('longTap')
+      touch = {}
+    }
+  }
+
+  function cancelLongTap() {
+    if (longTapTimeout) clearTimeout(longTapTimeout)
+    longTapTimeout = null
+  }
+
+  function cancelAll() {
+    if (touchTimeout) clearTimeout(touchTimeout)
+    if (tapTimeout) clearTimeout(tapTimeout)
+    if (swipeTimeout) clearTimeout(swipeTimeout)
+    if (longTapTimeout) clearTimeout(longTapTimeout)
+    touchTimeout = tapTimeout = swipeTimeout = longTapTimeout = null
+    touch = {}
+  }
+
+  $(document).ready(function(){
+    var now, delta
+
+    $(document.body)
+      .bind('touchstart', function(e){
+        now = Date.now()
+        delta = now - (touch.last || now)
+        touch.el = $(parentIfText(e.touches[0].target))
+        touchTimeout && clearTimeout(touchTimeout)
+        touch.x1 = e.touches[0].pageX
+        touch.y1 = e.touches[0].pageY
+        if (delta > 0 && delta <= 250) touch.isDoubleTap = true
+        touch.last = now
+        longTapTimeout = setTimeout(longTap, longTapDelay)
+      })
+      .bind('touchmove', function(e){
+        cancelLongTap()
+        touch.x2 = e.touches[0].pageX
+        touch.y2 = e.touches[0].pageY
+        if (Math.abs(touch.x1 - touch.x2) > 10)
+          e.preventDefault()
+      })
+      .bind('touchend', function(e){
+         cancelLongTap()
+
+        // swipe
+        if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > 30) ||
+            (touch.y2 && Math.abs(touch.y1 - touch.y2) > 30))
+
+          swipeTimeout = setTimeout(function() {
+            touch.el.trigger('swipe')
+            touch.el.trigger('swipe' + (swipeDirection(touch.x1, touch.x2, touch.y1, touch.y2)))
+            touch = {}
+          }, 0)
+
+        // normal tap
+        else if ('last' in touch)
+
+          // delay by one tick so we can cancel the 'tap' event if 'scroll' fires
+          // ('tap' fires before 'scroll')
+          tapTimeout = setTimeout(function() {
+
+            // trigger universal 'tap' with the option to cancelTouch()
+            // (cancelTouch cancels processing of single vs double taps for faster 'tap' response)
+            var event = $.Event('tap')
+            event.cancelTouch = cancelAll
+            touch.el.trigger(event)
+
+            // trigger double tap immediately
+            if (touch.isDoubleTap) {
+              touch.el.trigger('doubleTap')
+              touch = {}
+            }
+
+            // trigger single tap after 250ms of inactivity
+            else {
+              touchTimeout = setTimeout(function(){
+                touchTimeout = null
+                touch.el.trigger('singleTap')
+                touch = {}
+              }, 250)
+            }
+
+          }, 0)
+
+      })
+      .bind('touchcancel', cancelAll)
+
+    $(window).bind('scroll', cancelAll)
+  })
+
+  ;['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(m){
+    $.fn[m] = function(callback){ return this.bind(m, callback) }
+  })
 })(Zepto)

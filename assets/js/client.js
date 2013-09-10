@@ -2,12 +2,49 @@ var Client;
 var Callbacks = {
     security_login: function (rsp) {
         Client._sid = rsp.data.sid;
+        Client._uid = rsp.data.USER_ID;
         localStorage.setItem('sid', rsp.data.sid);
-//        alert("login as " + rsp.data.DISPLAY_NAME);
+        localStorage.setItem('uid', rsp.data.USER_ID);
     },
     v2_event_list: function (rsp) {
         var template = Handlebars.compile(templates.photo);
-        $('#page-index').append(template(rsp.data));
+        var list = $(template(rsp.data));
+        list.find("a.op-like").forEach(function (item) {
+            if ($(item).data("like-status") == 0) {
+                var func = function () {
+                    Client.like($(this).data("id"));
+                    $(item).find("span.glyphicon").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart").addClass("red");
+                    $(item).find("span.op-num").html(parseInt($(item).find("span.op-num").html()) + 1);
+                    $(item).data("like-status", "true");
+                };
+                $(item).tap(func);
+//                $(item).click(func);
+            }
+        });
+        var page = $("#page-index");
+        if (!page.length) {
+            var tpl = Handlebars.compile(templates.pageIndex);
+            page = $(tpl()).prependTo("#global-wrap");
+            page.data("loading", 0);
+            window.onscroll = function () {
+                if (!page.data("loading")
+                    && (page.data("next") == 'true')
+                    && ($(window).scrollTop() > (page.find("div.photo-detail-wrapper:last").find("dl.photo-author").position().top - 1000))
+                    ) {
+                    page.data("loading", 1);
+//                    Client.timeline(page.data("since"));
+                }
+//                log(page.find("div.photo-detail-wrapper:last").find("dl.photo-author").position().top - 1000);
+//                log($(window).scrollTop());
+            };
+        }
+        page.data("since", rsp.data.since_id)
+            .data("next", rsp.data.havenextpage)
+            .prepend(list)
+            .data("loading", 0);
+
+    },
+    place_good: function (rsp) {
     }
 };
 
@@ -16,6 +53,12 @@ $(function () {
         var date = new Date(utc);
         return date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate()
             + " " + date.getHours() + ":" + date.getMinutes();
+    });
+    Handlebars.registerHelper('isTrue', function (boolvar, options) {
+        if (boolvar === "true" || boolvar === true) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
     });
 });
 
@@ -26,12 +69,12 @@ $(function () {
     w = new WebSocket(url, 'echo-protocol');
 
     w.onopen = function () {
-        console.log('connected, init......');
+        log('connected, init......');
     }
 
     w.onmessage = function (e) {
         var rsp = JSON.parse(e.data);
-        console.log(rsp);
+        log(rsp);
         if (!rsp.rsp) {
             alert(rsp.msg);
             return false;
@@ -49,6 +92,7 @@ $(function () {
 
     Client = {
         _sid: '',
+        _uid: '',
         webSocket: w,
         req: function (cmd, data, files) {
             var postData = {
@@ -65,8 +109,10 @@ $(function () {
         },
         login: function (username, password) {
             var sid = localStorage.getItem('sid');
-            if (sid) {
+            var uid = localStorage.getItem('uid');
+            if (sid && uid) {
                 this._sid = sid;
+                this._uid = uid;
             } else {
                 this.req('security_login', {
                     username: username,
@@ -81,12 +127,19 @@ $(function () {
                 since_id: since_id || 0,
                 num: 20
             });
+        },
+        like: function (photo_id) {
+            this.req('place_addgood', {
+                userid: this._uid,
+                placeid: photo_id,
+                canreduce: 1
+            });
         }
     };
 
     //test
     setTimeout(function () {
-        console.log(Client.webSocket.readyState);
+        log(Client.webSocket.readyState);
         Client.login('littlexiang521@gmail.com', '3223900');
     }, 500);
 
@@ -95,5 +148,13 @@ $(function () {
     }, 1000);
 
 });
+
+function showMessage(msg) {
+    alert(msg);
+}
+
+function log(msg) {
+    console.log(msg);
+}
 
 

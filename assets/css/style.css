@@ -1,30 +1,35 @@
-html {
-    max-width: 640px;
+body {
+    padding: 5px 0;
+    background-color: #f2f2f2;
 }
 
-body {
-    margin: 10px auto;
+a, a:hover, a:visited {
+    text-decoration: none;
 }
 
 dl {
     margin-bottom: 0;
     margin-top: 0;
-    padding: 0.6em 0.5em;
+    padding: 0.5em;
 }
 
 h4, h5, h6 {
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.red {
+    color: #ff0000;
+}
+
+.nickname {
+    color: #666;
 }
 
 .container {
+    max-width: 626px;
     padding-left: 5px;
     padding-right: 5px;
-}
-
-.dropdown-menu {
-    min-width: 60px;
-    font-size: 12px;
 }
 
 .datetime {
@@ -33,35 +38,79 @@ h4, h5, h6 {
     font-size: 12px;
 }
 
-.photo-content {
-    border: 1px solid #ccc;
-    border-top: 0 none;
-    box-shadow: 0 2px 4px 0 #ccc;
+.photo-author {
+    padding: 1em;
 }
 
-.photo-content dt {
-    width: 64px;
+.photo-author h5 b {
+    text-overflow: ellipsis;
+    max-width: 30%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.photo-author dt {
+    width: 48px;
     float: left;
     overflow: hidden;
+    padding: 0 3px 3px 0;
 }
 
-.photo-content dd {
-    margin-left: 70px;
+.photo-author dt img {
+    box-shadow: 1px 1px 2px 0 #ccc;
+}
+
+.photo-author dd {
+    margin-left: 54px;
+}
+
+.photo-title {
+    padding:0 1em 1em 1em;
+}
+
+.photo-title p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6em;
+    word-break: break-all;
+    font-weight: 500;
 }
 
 .photo-detail-wrapper {
     margin: 0 auto 1.5em auto;
+    box-shadow: 0 2px 4px 0 #ccc;
+    background-color: #ffffff;
 }
 
 .photo-wrapper {
     width: 100%;
-    padding: 6px 6px 0 6px;
-    border: 1px solid #ccc;
-    border-bottom: 0 none;
 }
 
 .photo-ops {
-    margin-top: 10px;
+    background-color: #f5f5f5;
+    box-shadow: inset 0 2px 3px 0 #ccc;
+}
+
+.photo-ops a:first-child {
+    width: 33%;
+    border: 0 none;
+}
+
+.photo-ops a:last-child {
+    width: 33%;
+    border: 0 none;
+}
+
+.photo-ops a {
+    display: block;
+    float: left;
+    width: 34%;
+    color: #999;
+    padding: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
 }
 
 .photo-comment-list .comment:last-child {
@@ -69,17 +118,23 @@ h4, h5, h6 {
 }
 
 .comment {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #d2d2d2;
 }
 
 .comment dt {
-    width: 48px;
+    width: 32px;
     float: left;
     overflow: hidden;
+    padding: 3px 3px 3px 0;
+}
+
+.comment dt img {
+    box-shadow: 2px 2px 2px 0 #ccc;
 }
 
 .comment dd {
-    margin-left: 54px;
+    margin-left: 38px;
+    font-size: 12px;
 }
 
 /*.photo-wrapper {*/
