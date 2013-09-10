@@ -76,9 +76,9 @@ $(function () {
     });
 
     //global menu
-    $("#global-menu-index").tap(function(){
+    $("#global-menu-index").click(function(){
         $("#menu").prop("checked", "");
-        $(document).scrollTop = 0;
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
         $("#page-index").prepend(Handlebars.compile(templates.pageLoading)());
         Client.timeline();
     });
