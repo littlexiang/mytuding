@@ -4,20 +4,43 @@
     <title>MyTuding</title>
     <meta charset="utf-8"/>
     <meta name="author" content="littlexiang<littlexiang521@gmail.com>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/path-menu.css">
     <script src="assets/js/zepto.js"></script>
     <!--<script src="assets/bootstrap/js/bootstrap.js"></script>-->
     <script src="assets/js/handlebars.js"></script>
+    <script src="assets/js/common.js"></script>
     <script src="assets/js/templates.js"></script>
     <script src="assets/js/client.js"></script>
+    <script src="assets/js/callback.js"></script>
 </head>
 <body>
 
+<div id="page-splash">
+    <div class="splash-login hide">
+        <form role="form" onsubmit="return false;">
+            <div class="form-group">
+                <input type="text" id="login-name" class="form-control" placeholder="图钉帐号"/>
+            </div>
+            <div class="form-group">
+                <input type="text" id="login-pass" class="form-control" placeholder="密码"/>
+            </div>
+            <button class="btn btn-block btn-success">登录</button>
+        </form>
+    </div>
+    <div class="splash-text">
+        <h2>MyTuding</h2>
+
+        <p><i>In Memory Of ...</i></p>
+    </div>
+</div>
+
 <div class="container" id="global-wrap">
-    <div style="z-index: 9999;">
+    <div id="page-index" style="display:none;"></div>
+    <div id="page-menu">
         <input type="checkbox" id="menu" class="menuControl"> <!-- Hidden -->
         <label for="menu">
             <div class="circle-container">

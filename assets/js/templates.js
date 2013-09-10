@@ -12,19 +12,18 @@ var templates = {
             <h5><span class="datetime pull-right">{{UTCConvert create_time}}</span> <span class="nickname">{{User.display_name}}</span></h5>\
         </dd>\
     </dl>\
-    <div class="photo-title"><p>{{&title}}&nbsp;{{#each tag_new}}<a href="javascript:void(0);">#{{this}}</a> &nbsp;{{/each}}</p></div>\
+    <div class="photo-title"><p>{{&title}}{{#each tag_new}}&nbsp;<a href="javascript:void(0);">#{{this}}</a>{{/each}}</p></div>\
     <div class="photo-ops clearfix">\
-        <a href="#"><span class="glyphicon glyphicon-comment"></span> {{comment_count}}</a>\
+        <a href="javascript:void(0);"><span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;{{comment_count}}</a>\
         <a href="javascript:void(0);" class="op-like" data-id="{{id}}" data-like-status="{{is_good}}">\
         {{#isTrue is_good}}<span class="glyphicon glyphicon-heart red"></span>{{else}}<span class="glyphicon glyphicon-heart-empty"></span>{{/isTrue}}\
-            <span class="op-num">{{good_count}}</span>\
+            <span class="op-num">&nbsp;{{good_count}}</span>\
         </a>\
-        <a href="#"><span class="glyphicon glyphicon-retweet"></span> {{forward_count}}</a>\
+        <a href="javascript:void(0);"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;{{forward_count}}</a>\
     </div>\
 </div>\
 {{/list}}',
-    pageIndex: '<div id="page-index"></div>',
-    pageLoading: '<div id="page-index-loading" class="loading">Loading ...</div>',
+    loading: '<div class="loading">Loading ...</div>',
     photoDetail: '\
 {{#list}}\
 <div class="photo-detail-wrapper">\

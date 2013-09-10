@@ -1,128 +1,34 @@
 var Client;
-var Callbacks = {
-    security_login: function (rsp) {
-        Client._sid = rsp.data.sid;
-        Client._uid = rsp.data.USER_ID;
-        localStorage.setItem('sid', rsp.data.sid);
-        localStorage.setItem('uid', rsp.data.USER_ID);
-    },
-    v2_event_list: function (rsp) {
-        var template = Handlebars.compile(templates.photo);
-        var list = $(template(rsp.data));
-        list.forEach(function (li) {
-            var a_like = $(li).find("a.op-like");
-            var photo = $(li).find("div.photo-wrapper").first();
-            var heart = photo.find("div.photo-like-heart");
-            if (!a_like.data("like-status")){
-                var func = function () {
-                    Client.like(a_like.data("id"));
-                    a_like.find("span.glyphicon").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart").addClass("red");
-                    a_like.find("span.op-num").html(parseInt(a_like.find("span.op-num").html()) + 1);
-                    a_like.data("like-status", "true");
-                };
-                a_like.tap(func);
-            }
-            photo.doubleTap(function (e) {
-                heart.fadeIn('fast');
-                setTimeout(function(){heart.fadeOut('fast');}, 750);
-                a_like.triggerHandler('tap');
-                e.preventDefault();
-                return false;
-            });
-        });
-        var page = $("#page-index");
-        if (!page.length) {
-            var tpl = Handlebars.compile(templates.pageIndex);
-            page = $(tpl()).prependTo("#global-wrap");
-            page.data("loading", 0);
-            window.onscroll = function () {
-                if (!page.data("loading")
-                    && (page.data("next") == 'true')
-                    && ($(window).scrollTop() > (page.find("div.photo-detail-wrapper:last").find("dl.photo-author").position().top - 2000))
-                    ) {
-                    page.data("loading", 1);
-                    Client.timeline(page.data("since"));
-                }
-            };
-        }
-        page.find("#page-index-loading").remove();
-        page.data("since", rsp.data.since_id)
-            .data("next", rsp.data.havenextpage)
-            .data("loading", 0)
-            .append(list)
-            .append(Handlebars.compile(templates.pageLoading)());
-    },
-    place_addgood: function (rsp) {
-    }
-};
 
 $(function () {
-    Handlebars.registerHelper('UTCConvert', function (utc) {
-        var date = new Date(utc);
-        return date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate()
-            + " " + date.getHours() + ":" + date.getMinutes();
-    });
-    Handlebars.registerHelper('isTrue', function (boolvar, options) {
-        if (boolvar === "true" || boolvar === true) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
-    });
-
-    //prevent zoom
-    $(document).doubleTap(function(e){
-        e.preventDefault();
-        return false;
-    });
-
-    //global menu
-    $("#global-menu-index").click(function(){
-        $("#menu").prop("checked", "");
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
-        $("#page-index").prepend(Handlebars.compile(templates.pageLoading)());
-        Client.timeline();
-    });
-
-});
-
-$(function () {
-    var w;
-    var url = 'ws://192.168.157.70:8080/';
-
-    w = new WebSocket(url, 'echo-protocol');
-
-    w.onopen = function () {
-        log('connected, init......');
-    }
-
-    w.onmessage = function (e) {
-        var rsp = JSON.parse(e.data);
-        log(rsp);
-        if (!rsp.rsp) {
-            alert(rsp.msg);
-            return false;
-        }
-        Callbacks[rsp.cmd](rsp);
-    };
-
-    w.onclose = function () {
-        showMessage('连接关闭，请刷新页面重试。', 'error', 0);
-    }
-
-    w.onerror = function () {
-        showMessage('连接错误～', 'error', 0);
-    }
-
     Client = {
         _sid: '',
         _uid: '',
-        webSocket: w,
+        webSocket: null,
+        connect: function () {
+            var url = 'ws://littlexiang.me:8080/';
+            this.webSocket = new WebSocket(url, 'echo-protocol');
+            this.webSocket.onopen = function () {
+                if (!Client.isLogin()) {
+                    Pages.splash.find('.splash-login').removeClass('hide');
+                }
+            };
+
+            this.webSocket.onmessage = this.reqCallback;
+
+            this.webSocket.onclose = function () {
+                this.connect();
+            };
+            this.webSocket.onerror = function () {
+                this.connect();
+            };
+        },
         req: function (cmd, data, files) {
             var postData = {
                 cmd: cmd,
                 data: data,
                 headers: {
-                    ua: "MyTuding/1.0.0",
+                    ua: 'MyTuding/1.0.0',
                     lang: "zh-chs"
                 },
                 sid: this._sid
@@ -130,13 +36,29 @@ $(function () {
             postData = JSON.stringify(postData);
             this.webSocket.send(postData);
         },
-        login: function (username, password) {
+        reqCallback: function (message) {
+            var rsp = JSON.parse(message.data);
+            log(rsp);
+            if (!rsp.rsp) {
+                alert(rsp.msg);
+                return false;
+            }
+            Callbacks[rsp.cmd](rsp);
+        },
+        isLogin: function () {
             var sid = localStorage.getItem('sid');
             var uid = localStorage.getItem('uid');
             if (sid && uid) {
                 this._sid = sid;
                 this._uid = uid;
-            } else {
+                Client.timeline();
+                $(document).trigger('splash-over');
+                return true;
+            }
+            return false;
+        },
+        login: function (username, password) {
+            if (!this.isLogin()) {
                 this.req('security_login', {
                     username: username,
                     password: password,
@@ -159,25 +81,7 @@ $(function () {
             });
         }
     };
-
-    //test
-    setTimeout(function () {
-        log(Client.webSocket.readyState);
-        Client.login('littlexiang521@gmail.com', '3223900');
-    }, 500);
-
-    setTimeout(function () {
-        Client.timeline();
-    }, 1000);
-
+    Client.connect();
 });
-
-function showMessage(msg) {
-    alert(msg);
-}
-
-function log(msg) {
-    console.log(msg);
-}
 
 
