@@ -27,10 +27,10 @@ $(function () {
             like.tap(func);
             photo.doubleTap(function (e) {
                 var heart = $(this).find('div.photo-like-heart');
-                heart.show().fadeIn('fast');
+                heart.fadeIn('fast');
                 like.triggerHandler('tap');
                 setTimeout(function () {
-                    heart.fadeOut('fast').hide();
+                    heart.fadeOut('fast');
                 }, 750);
                 e.stopPropagation();
                 e.preventDefault();
