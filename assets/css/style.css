@@ -111,6 +111,9 @@ h4, h5, h6 {
     font-size: 8em;
     text-shadow: 0 2px 2px #000;
     opacity: 0;
+    display: none;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
 }
 
 .photo-ops {

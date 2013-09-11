@@ -10,7 +10,7 @@ $(function () {
             this.webSocket = new WebSocket(url, 'echo-protocol');
             this.webSocket.onopen = function () {
                 if (!Client.isLogin()) {
-                    Pages.splash.find('.splash-login').removeClass('hide');
+                    Pages.splash.find('.splash-login').show();
                 }
             };
 
@@ -20,7 +20,7 @@ $(function () {
                 this.connect();
             };
             this.webSocket.onerror = function () {
-                this.connect();
+//                this.connect();
             };
         },
         req: function (cmd, data, files) {
@@ -42,8 +42,9 @@ $(function () {
             if (!rsp.rsp) {
                 alert(rsp.msg);
                 return false;
+            }else{
+                Callbacks[rsp.cmd](rsp);
             }
-            Callbacks[rsp.cmd](rsp);
         },
         isLogin: function () {
             var sid = localStorage.getItem('sid');
@@ -52,7 +53,7 @@ $(function () {
                 this._sid = sid;
                 this._uid = uid;
                 Client.timeline();
-                $(document).trigger('splash-over');
+                Pages.document.trigger('splash-over');
                 return true;
             }
             return false;
@@ -77,7 +78,7 @@ $(function () {
             this.req('place_addgood', {
                 userid: this._uid,
                 placeid: photo_id,
-                canreduce: 1
+                canreduce: 0
             });
         }
     };

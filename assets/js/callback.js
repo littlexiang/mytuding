@@ -13,24 +13,25 @@ $(function () {
         var template = Handlebars.compile(templates.photo);
         var list = $(template(rsp.data));
         list.forEach(function (li) {
-            var a_like = $(li).find('a.op-like');
-            var photo = $(li).find('div.photo-wrapper').first();
-            var heart = photo.find('div.photo-like-heart');
-            if (!a_like.data('like-status')) {
-                var func = function () {
-                    Client.like(a_like.data('id'));
-                    a_like.find('span.glyphicon').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart').addClass('red');
-                    a_like.find('span.op-num').html(parseInt(a_like.find('span.op-num').html()) + 1);
-                    a_like.data('like-status', 'true');
-                };
-                a_like.tap(func);
-            }
+            var like = $(li).find('a.op-like');
+            var photo = $(li).find('div.photo-wrapper');
+            var func = function () {
+                var $this = $(this);
+                if (!$this.data('like-status')) {
+                    Client.like($this.data('id'));
+                    $this.find('span.glyphicon').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart').addClass('red');
+                    $this.find('span.op-num').html(parseInt($this.find('span.op-num').html()) + 1);
+                    $this.data('like-status', 'true');
+                }
+            };
+            like.tap(func);
             photo.doubleTap(function (e) {
-                heart.fadeIn('fast');
+                var heart = $(this).find('div.photo-like-heart');
+                heart.show().fadeIn('fast');
+                like.triggerHandler('tap');
                 setTimeout(function () {
-                    heart.fadeOut('fast');
+                    heart.fadeOut('fast').hide();
                 }, 750);
-                a_like.triggerHandler('tap');
                 e.stopPropagation();
                 e.preventDefault();
                 return false;
