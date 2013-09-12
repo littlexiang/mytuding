@@ -24,5 +24,4 @@ var templates = {
 </div>\
 {{/list}}',
     loading: '<div class="loading">Loading ...</div>'
-
 };

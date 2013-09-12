@@ -1,10 +1,11 @@
-var Client;
-
-$(function () {
-    Client = {
+var Client = (function () {
+    return {
         _sid: '',
         _uid: '',
         webSocket: null,
+        init: function () {
+            this.connect();
+        },
         connect: function () {
             var url = 'ws://littlexiang.me:8080/';
             this.webSocket = new WebSocket(url, 'echo-protocol');
@@ -38,12 +39,12 @@ $(function () {
         },
         reqCallback: function (message) {
             var rsp = JSON.parse(message.data);
-            log(rsp);
+            App.log(rsp);
             if (!rsp.rsp) {
                 alert(rsp.msg);
                 return false;
-            }else{
-                Callbacks[rsp.cmd](rsp);
+            } else {
+                return Callbacks[rsp.cmd](rsp);
             }
         },
         isLogin: function () {
@@ -52,8 +53,8 @@ $(function () {
             if (sid && uid) {
                 this._sid = sid;
                 this._uid = uid;
-                Client.timeline();
-                Pages.document.trigger('splash-over');
+                this.timeline();
+                Pages.document.trigger('login-success');
                 return true;
             }
             return false;
@@ -81,8 +82,8 @@ $(function () {
                 canreduce: 0
             });
         }
+
     };
-    Client.connect();
-});
+})();
 
 
