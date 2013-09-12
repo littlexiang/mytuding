@@ -94,7 +94,7 @@ var App = (function () {
             console.log(msg);
         },
         render: function (tpl, data) {
-            return $(Handlebars.compile(tpl, data)());
+            return $(Handlebars.compile(tpl)(data));
         }
     };
 })();
