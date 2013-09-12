@@ -9,8 +9,7 @@ var Callbacks = (function () {
             Pages.document.trigger('login-success');
         },
         v2_event_list: function (rsp) {
-            var template = Handlebars.compile(templates.photo);
-            var list = $(template(rsp.data));
+            var list = App.render(templates.photos, rsp.data);
             list.forEach(function (li) {
                 var like = $(li).find('a.op-like');
                 var photo = $(li).find('div.photo-wrapper');
@@ -42,7 +41,7 @@ var Callbacks = (function () {
                 .data('next', rsp.data.havenextpage)
                 .data('loading', 0)
                 .append(list)
-                .append(Handlebars.compile(templates.loading)());
+                .append(App.render(templates.loading));
             Pages.index.data('loading', 0);
         },
         place_addgood: function (rsp) {

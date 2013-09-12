@@ -7,7 +7,18 @@ var App = (function () {
         Pages.splash = $('#page-splash');
     }
 
-    function initHandlebars() {
+    function initExts() {
+        //Zepto
+        $.fn.slideOut = function (direction) {
+            direction = direction || 'right';
+            var option = {};
+            option[direction] = '-100%';
+            this.css('position', 'absolute').animate(option, 1000, 'ease', function () {
+                $(this).remove();
+            });
+        };
+
+        //Handlebars
         var now = new Date();
         Handlebars.registerHelper('UTCConvert', function (utc) {
             var date = new Date(utc);
@@ -68,8 +79,8 @@ var App = (function () {
 
     return {
         init: function () {
+            initExts();
             initPages();
-            initHandlebars();
             initSplash();
             initMenu();
             initIndex();
@@ -83,7 +94,7 @@ var App = (function () {
             console.log(msg);
         },
         render: function (tpl, data) {
-            return Handlebars.compile(tpl, data)();
+            return $(Handlebars.compile(tpl, data)());
         }
     };
 })();

@@ -1,5 +1,5 @@
 var templates = {
-    photo: '\
+    photos: '\
 {{#list}}\
 <div class="photo-detail-wrapper">\
     <div class="photo-wrapper">\
@@ -23,5 +23,6 @@ var templates = {
     </div>\
 </div>\
 {{/list}}',
-    loading: '<div class="loading">Loading ...</div>'
+    loading: '<div class="loading">Loading ...</div>',
+    comments: '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>'
 };

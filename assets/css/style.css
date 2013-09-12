@@ -143,7 +143,7 @@ h4, h5, h6 {
     line-height: 0.8em;
 }
 
-.photo-comment-list .comment:last-child {
+.comment:last-child {
     border-bottom: 0 none;
 }
 
