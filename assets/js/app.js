@@ -51,7 +51,7 @@ var App = (function () {
 
         Pages.document.one('login-success', function (e) {
             $('#login-form').hide();
-            Pages.splash.slideOut('right');
+            Pages.splash.slideOut();
             Pages.index.show();
         });
     }
