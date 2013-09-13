@@ -2,22 +2,35 @@ var Pages = {};
 
 var App = (function () {
     function initPages() {
+        Pages.window = $(window);
         Pages.document = $(document);
         Pages.index = $('#page-index');
         Pages.splash = $('#page-splash');
+        Pages.menu = $('#menu-left');
+
+        var height = Pages.window.height();
+        var width = Pages.window.width();
+
+        App.scrollTo();
+
+        $('#global-wrap').css('width', (width > 626) ? 626 : width)
+            .css('min-height', height);
+        Pages.splash.css('height', height);
+        Pages.menu.css('height', height);
+        Pages.index.css('min-height', height);
+
+        Pages.document.on('login-success', function (e) {
+            $('#login-form').hide();
+            Pages.splash.css('position', 'absolute')
+                .animate({left: '100%'}, 750, 'ease', function () {
+                    $(this).css({display: 'none', 'position': 'fixed'});
+                });
+            Pages.index.show();
+            Pages.index.trigger('swipeRight');
+        });
     }
 
     function initExts() {
-        //Zepto
-        $.fn.slideOut = function (direction) {
-            direction = direction || 'right';
-            var option = {};
-            option[direction] = '-100%';
-            this.css('position', 'absolute').animate(option, 1000, 'ease', function () {
-                $(this).remove();
-            });
-        };
-
         //Handlebars
         var now = new Date();
         Handlebars.registerHelper('UTCConvert', function (utc) {
@@ -39,25 +52,16 @@ var App = (function () {
     }
 
     function initSplash() {
-        Pages.splash.height($(window).height() * 1.2);
-        App.scrollTo();
-
         $('#login-form').submit(function () {
             var name = $('#login-name').val();
             var pass = $('#login-pass').val();
             Client.login(name, pass);
             return false;
         });
-
-        Pages.document.one('login-success', function (e) {
-            $('#login-form').hide();
-            Pages.splash.slideOut();
-            Pages.index.show();
-        });
     }
 
     function initIndex() {
-        window.onscroll = function () {
+        Pages.window.onscroll = function () {
             if (!Pages.index.data('loading')
                 && (Pages.index.data('next'))
                 && ($(window).scrollTop() > (Pages.index.find('div.photo-detail-wrapper:last').find('dl.photo-author').position().top - 2000))
@@ -66,14 +70,27 @@ var App = (function () {
                 Client.timeline(Pages.index.data('since'));
             }
         };
+        Pages.index.swipeRight(function () {
+            var top = -1 * Pages.window.scrollTop();
+            Pages.index.css({position: 'absolute', top: top})
+                .animate({left: '80%'}, 300, 'linear');
+        });
     }
 
     function initMenu() {
-        $('#global-menu-index').click(function () {
-            $('#menu').prop('checked', '');
+        Pages.menu.swipeLeft(function () {
+            var top = Pages.index.position().top;
+            Pages.index.animate({left: '0'}, 300, 'linear', function () {
+                Pages.index.css({position: 'relative', top: 0});
+                Pages.window[0].scrollTo(0, -1 * top);
+            });
+        });
+
+        $('#menu-a-index').click(function () {
             Pages.index.prepend(App.render(templates.loading));
-            App.scrollTo();
+            Pages.menu.trigger('swipeLeft');
             Client.timeline();
+            App.scrollTo();
         });
     }
 
@@ -82,8 +99,8 @@ var App = (function () {
             initExts();
             initPages();
             initSplash();
-            initMenu();
             initIndex();
+            initMenu();
             Client.init();
         },
         scrollTo: function (el, offset) {
