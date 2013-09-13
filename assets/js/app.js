@@ -25,7 +25,6 @@ var App = (function () {
                 .animate({left: '100%'}, 750, 'ease', function () {
                     $(this).css({display: 'none', 'position': 'fixed'});
                 });
-            Pages.index.show();
             Pages.index.trigger('swipeRight');
         });
     }
@@ -71,19 +70,13 @@ var App = (function () {
             }
         };
         Pages.index.swipeRight(function () {
-            var top = -1 * Pages.window.scrollTop();
-            Pages.index.css({position: 'absolute', top: top})
-                .animate({left: '80%'}, 300, 'linear');
+            Pages.index.animate({left: '80%'}, 500, 'ease-in');
         });
     }
 
     function initMenu() {
         Pages.menu.swipeLeft(function () {
-            var top = Pages.index.position().top;
-            Pages.index.animate({left: '0'}, 300, 'linear', function () {
-                Pages.index.css({position: 'relative', top: 0});
-                Pages.window[0].scrollTo(0, -1 * top);
-            });
+            Pages.index.animate({left: '0'}, 500, 'ease-in');
         });
 
         $('#menu-a-index').click(function () {
