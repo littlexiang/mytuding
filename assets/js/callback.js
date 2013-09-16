@@ -23,13 +23,17 @@ var Callbacks = (function () {
                     }
                 };
                 like.tap(func);
+                like.click(function(){
+                    like.trigger('tap');
+                });
                 photo.doubleTap(function (e) {
-                    var heart = $(this).find('div.photo-like-heart');
-                    heart.fadeIn('fast');
+                    var heart = App.render(templates.likeHeart).appendTo(photo);
                     like.triggerHandler('tap');
-                    setTimeout(function () {
-                        heart.fadeOut('fast');
-                    }, 500);
+                    heart.fadeIn('fast', function(){
+                        setTimeout(function () {
+                            heart.remove();
+                        }, 750);
+                    });
                     e.stopPropagation();
                     e.preventDefault();
                     return false;
@@ -52,7 +56,6 @@ var Callbacks = (function () {
                     Client.timeline(Pages.index.data('since'));
                 }
             });
-
         },
         place_addgood: function (rsp) {
         }

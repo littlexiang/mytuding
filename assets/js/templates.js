@@ -4,7 +4,6 @@ var templates = {
 <div class="photo-detail-wrapper">\
     <div class="photo-wrapper">\
         <img class="img-responsive" src="{{url}}">\
-        <div class="red photo-like-heart"><span class="glyphicon glyphicon-heart"></span></div>\
     </div>\
     <dl class="photo-author clearfix">\
         <dt><img src="{{User.thumbnail_url}}" class="img-responsive"></dt>\
@@ -23,6 +22,7 @@ var templates = {
     </div>\
 </div>\
 {{/list}}',
+    likeHeart: '<div class="red photo-like-heart"><span class="glyphicon glyphicon-heart"></span></div>',
     loading: '<div class="loading">Loading ...</div>',
     comments: '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>'
 };
