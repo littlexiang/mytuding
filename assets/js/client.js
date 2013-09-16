@@ -11,7 +11,7 @@ var Client = (function () {
             this.webSocket = new WebSocket(url, 'echo-protocol');
             this.webSocket.onopen = function () {
                 if (!Client.isLogin()) {
-                    Pages.splash.find('.splash-login').show();
+                    Pages.splash.find('.splash-login').css('visibility', 'visible');
                 }
             };
 

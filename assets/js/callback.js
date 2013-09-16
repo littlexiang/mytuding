@@ -29,7 +29,7 @@ var Callbacks = (function () {
                     like.triggerHandler('tap');
                     setTimeout(function () {
                         heart.fadeOut('fast');
-                    }, 750);
+                    }, 500);
                     e.stopPropagation();
                     e.preventDefault();
                     return false;
@@ -39,10 +39,20 @@ var Callbacks = (function () {
             Pages.index.find('.loading').remove();
             Pages.index.data('since', rsp.data.since_id)
                 .data('next', rsp.data.havenextpage)
-                .data('loading', 0)
                 .append(list)
-                .append(App.render(templates.loading));
-            Pages.index.data('loading', 0);
+                .append(App.render(templates.loading))
+                .data('loading', 0);
+
+            Pages.body.on('scroll', function (e) {
+                if (!Pages.index.data('loading')
+                    && (Pages.index.data('next'))
+                    && ((Pages.index.find('.loading').position().top - Pages.body.height()) < 500)
+                    ) {
+                    Pages.index.data('loading', 1);
+                    Client.timeline(Pages.index.data('since'));
+                }
+            });
+
         },
         place_addgood: function (rsp) {
         }

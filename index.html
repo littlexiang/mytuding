@@ -6,8 +6,8 @@
     <meta name="author" content="littlexiang<littlexiang521@gmail.com>">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <!--<link rel="stylesheet" href="assets/css/path-menu.css">-->
@@ -26,9 +26,10 @@
     <button onclick="Pages.menu.trigger('swipeLeft');">left</button>
 </div>
 
-<div class="container" id="global-wrap">
+<div class="wrap">
+
     <div id="page-splash">
-        <div class="splash-login" style="display:none;">
+        <div class="splash-login">
             <form role="form" id="login-form">
                 <div class="form-group">
                     <input type="text" id="login-name" class="form-control" placeholder="图钉帐号"/>
@@ -41,9 +42,11 @@
         </div>
         <div class="splash-text">
             <h2>MyTuding</h2>
+
             <p><i>In Memory Of ...</i></p>
         </div>
     </div>
+
     <div id="menu-left">
         <dl>
             <dt></dt>
@@ -57,27 +60,15 @@
         </ul>
     </div>
 
-    <div id="page-index"></div>
+    <div class="wrap" id="page-body">
 
-    <div id="page-home" style="">
+        <div id="page-index"></div>
+
+        <div id="page-home" style="">
+        </div>
+
     </div>
 
-
-    <!--<div id="page-menu">-->
-    <!--<input type="checkbox" id="menu" class="menuControl"> &lt;!&ndash; Hidden &ndash;&gt;-->
-    <!--<label for="menu">-->
-    <!--<div class="circle-container">-->
-    <!--<button class="circle">&#10006;</button>-->
-    <!--</div>-->
-    <!--</label>-->
-    <!--<ul class="items" id="global-menu">-->
-    <!--<li><span class="glyphicon glyphicon-cog"></span></li>-->
-    <!--<li><span class="glyphicon glyphicon-search"></span></li>-->
-    <!--<li><span class="glyphicon glyphicon-camera"></span></li>-->
-    <!--<li><span class="glyphicon glyphicon-comment"></span></li>-->
-    <!--<li id="global-menu-index"><span class="glyphicon glyphicon-picture"></span></li>-->
-    <!--</ul>-->
-    <!--</div>-->
 </div>
 </body>
 </html>
