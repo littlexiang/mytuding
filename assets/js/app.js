@@ -78,6 +78,8 @@ var App = (function () {
             Client.timeline();
             Pages.body.scrollTo();
         });
+
+        Pages.menu.show();
     }
 
     return {
