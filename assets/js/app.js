@@ -96,5 +96,4 @@ var App = (function () {
             return $(Handlebars.compile(tpl)(data));
         }
     };
-})
-    ();
+})();
