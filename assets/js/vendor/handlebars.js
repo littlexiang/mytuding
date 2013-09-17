@@ -22,12 +22,12 @@ THE SOFTWARE.
 
 */
 
-// lib/handlebars/browser-prefix.js
+// vendor/handlebars/browser-prefix.js
 var Handlebars = {};
 
 (function(Handlebars, undefined) {
 ;
-// lib/handlebars/base.js
+// vendor/handlebars/base.js
 
 Handlebars.VERSION = "1.0.0";
 Handlebars.COMPILER_REVISION = 4;
@@ -183,7 +183,7 @@ Handlebars.registerHelper('log', function(context, options) {
   Handlebars.log(level, context);
 });
 ;
-// lib/handlebars/compiler/parser.js
+// vendor/handlebars/compiler/parser.js
 /* Jison generated parser */
 var handlebars = (function(){
 var parser = {trace: function trace() { },
@@ -663,7 +663,7 @@ parser.lexer = lexer;
 function Parser () { this.yy = {}; }Parser.prototype = parser;parser.Parser = Parser;
 return new Parser;
 })();;
-// lib/handlebars/compiler/base.js
+// vendor/handlebars/compiler/base.js
 
 Handlebars.Parser = handlebars;
 
@@ -676,7 +676,7 @@ Handlebars.parse = function(input) {
   return Handlebars.Parser.parse(input);
 };
 ;
-// lib/handlebars/compiler/ast.js
+// vendor/handlebars/compiler/ast.js
 Handlebars.AST = {};
 
 Handlebars.AST.ProgramNode = function(statements, inverse) {
@@ -807,7 +807,7 @@ Handlebars.AST.CommentNode = function(comment) {
   this.comment = comment;
 };
 ;
-// lib/handlebars/utils.js
+// vendor/handlebars/utils.js
 
 var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
 
@@ -882,7 +882,7 @@ Handlebars.Utils = {
   }
 };
 ;
-// lib/handlebars/compiler/compiler.js
+// vendor/handlebars/compiler/compiler.js
 
 /*jshint eqnull:true*/
 var Compiler = Handlebars.Compiler = function() {};
@@ -2174,7 +2174,7 @@ Handlebars.compile = function(input, options) {
 };
 
 ;
-// lib/handlebars/runtime.js
+// vendor/handlebars/runtime.js
 
 Handlebars.VM = {
   template: function(templateSpec) {
@@ -2273,6 +2273,6 @@ Handlebars.VM = {
 
 Handlebars.template = Handlebars.VM.template;
 ;
-// lib/handlebars/browser-suffix.js
+// vendor/handlebars/browser-suffix.js
 })(Handlebars);
 ;

@@ -10,9 +10,7 @@ var Client = (function () {
             var url = 'ws://littlexiang.me:8080/';
             this.webSocket = new WebSocket(url, 'echo-protocol');
             this.webSocket.onopen = function () {
-                if (!Client.isLogin()) {
-                    Pages.splash.find('.splash-login').css('visibility', 'visible');
-                }
+                Modules.user.login();
             };
 
             this.webSocket.onmessage = this.reqCallback;
@@ -30,7 +28,7 @@ var Client = (function () {
                 data: data,
                 headers: {
                     ua: 'MyTuding/1.0.0',
-                    lang: "zh-chs"
+                    lang: 'zh-chs'
                 },
                 sid: this._sid
             };
@@ -47,30 +45,36 @@ var Client = (function () {
                 return Callbacks[rsp.cmd](rsp);
             }
         },
+        getSid: function(){
+            return this._sid;
+        },
+        getUid: function(){
+            return $this._uid;
+        },
         isLogin: function () {
             var sid = localStorage.getItem('sid');
             var uid = localStorage.getItem('uid');
             if (sid && uid) {
                 this._sid = sid;
                 this._uid = uid;
-                this.timeline();
-                Pages.document.trigger('login-success');
                 return true;
             }
             return false;
         },
         login: function (username, password) {
-            if (!this.isLogin()) {
-                this.req('security_login', {
-                    username: username,
-                    password: password,
-                    is_need_get: [0, 0, 0, 0, 0]
-                });
-            }
+            this.req('security_login', {
+                username: username,
+                password: password,
+                is_need_get: [0, 0, 0, 0, 0]
+            });
+        },
+        logout: function () {
+            localStorage.removeItem('sid');
+            localStorage.removeItem('uid');
         },
         timeline: function (since_id) {
             this.req('v2_event_list', {
-                type: "follow",
+                type: 'follow',
                 since_id: since_id || 0,
                 num: 20
             });

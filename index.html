@@ -10,27 +10,25 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!--<link rel="stylesheet" href="assets/css/path-menu.css">-->
-    <script src="assets/js/zepto.js"></script>
-    <!--<script src="assets/bootstrap/js/bootstrap.js"></script>-->
-    <script src="assets/js/handlebars.js"></script>
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/templates.js"></script>
-    <script src="assets/js/client.js"></script>
-    <script src="assets/js/callback.js"></script>
-    <script src="assets/js/common.js"></script>
+    <script src="assets/js/vendor/zepto.js"></script>
+    <script src="assets/js/vendor/handlebars.js"></script>
+    <script src="assets/js/vendor/require.js"></script>
+    <script src="assets/js/lib/app.js"></script>
+    <script src="assets/js/lib/client.js"></script>
+    <script src="assets/js/lib/templates.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
 </head>
 <body>
-<div style="position: fixed;top:0;z-index: 999;">
+<div style="position: fixed;bottom:0;z-index: 999;">
     <button onclick="Pages.menu.trigger('swipeLeft');">left</button>
     <button onclick="Pages.index.trigger('swipeRight');">right</button>
 </div>
 
 <div class="wrap">
 
-    <div id="page-splash">
+    <div id="page-splash" style="display: none;">
         <div class="splash-login">
-            <form role="form" id="login-form">
+            <form role="form" id="login-form" style="display: none;">
                 <div class="form-group">
                     <input type="text" id="login-name" class="form-control" placeholder="图钉帐号"/>
                 </div>
@@ -47,27 +45,24 @@
         </div>
     </div>
 
-    <div id="menu-left">
+    <div id="menu-left" style="display: none;">
         <dl>
-            <dt></dt>
-            <dd></dd>
+            <dt><img src="" width="64" height="64" class="avatar" /></dt>
+            <dd>
+                <h2 class="name">&nbsp;</h2>
+                <p class="signature">&nbsp;</p>
+            </dd>
         </dl>
         <ul>
-            <li><a href="javascript:void(0);" id="menu-a-index">首页</a></li>
-            <li><a href="javascript:void(0);" id="menu-a-homepage">我的主页</a></li>
-            <li><a href="javascript:void(0);" id="menu-a-settings">设置</a></li>
-            <li><a href="javascript:void(0);" id="menu-a-about">关于</a></li>
+            <li><a href="javascript:void(0);" id="menu-index">首页</a></li>
+            <li><a href="javascript:void(0);" id="menu-home">我的主页</a></li>
+            <li><a href="javascript:void(0);" id="menu-settings">设置</a></li>
+            <li><a href="javascript:void(0);" id="menu-about">关于</a></li>
+            <li><a href="javascript:void(0);" id="menu-logout">退出</a></li>
         </ul>
     </div>
 
-    <div class="wrap" id="page-body">
-
-        <div id="page-index"></div>
-
-        <div id="page-home" style="">
-        </div>
-
-    </div>
+    <div class="wrap" id="page-body"></div>
 
 </div>
 </body>

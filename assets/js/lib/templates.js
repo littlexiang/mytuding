@@ -1,5 +1,5 @@
 var templates = {
-    photo: '\
+    photos: '{{#list}}\
 <div class="photo-detail-wrapper" data-id="{{id}}">\
     <div class="photo-wrapper">\
         <img class="img-responsive" src="{{url}}">\
@@ -19,7 +19,8 @@ var templates = {
         </a>\
         <a href="javascript:void(0);"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;{{forward_count}}</a>\
     </div>\
-</div>',
+</div>\
+{{/list}}',
     likeHeart: '<div class="red photo-like-heart"><span class="glyphicon glyphicon-heart"></span></div>',
     loading: '<div class="loading">Loading ...</div>',
     commentForm: '<form role="form" class="photo-comment-form form-inline clearfix">\

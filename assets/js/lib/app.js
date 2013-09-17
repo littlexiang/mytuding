@@ -1,38 +1,32 @@
 var Pages = {};
+var Callbacks = {};
+var Modules = {
+    user: {},
+    photo: {}
+};
 
 var App = (function () {
     function initPages() {
         Pages.window = $(window);
         Pages.document = $(document);
         Pages.body = $('#page-body');
-        Pages.index = $('#page-index');
         Pages.splash = $('#page-splash');
         Pages.menu = $('#menu-left');
-
-        Pages.document.on('login-success', function (e) {
-            $('#login-form').css('visiblity', 'hidden');
-            Pages.splash.slideOut('100%', function () {
-                $(this).css({display: 'none'});
-            });
-            Pages.menu.css({display: 'block'});
-            Pages.window[0].scrollTo(0, 1);
-            Pages.body.trigger('swipeRight');
-        });
     }
 
     function initExts() {
         $.fn.slideOut = function (left, callback) {
             left = left || '100%';
-            callback = callback | function () {
-            };
             this.animate({
                 translate3d: left + ', 0, 0'
             }, 500, 'ease-in', callback);
+            return this;
         };
         $.fn.scrollToEl = function (el, offset) {
             offset = offset || 0;
             var top = el ? (el.position().top + offset) : offset;
             this[0].scrollTo(0, top);
+            return this;
         };
         //Handlebars
         var now = new Date();
@@ -54,16 +48,11 @@ var App = (function () {
         });
     }
 
-    function initSplash() {
-        $('#login-form').submit(function () {
-            var name = $('#login-name').val();
-            var pass = $('#login-pass').val();
-            Client.login(name, pass);
-            return false;
-        });
-    }
-
     function initBody() {
+        Pages.window[0].scrollTo(0, 1);
+        Pages.window[0].onscroll = function () {
+            return false;
+        };
         Pages.body.swipeRight(function () {
             Pages.body.slideOut('80%');
         }).swipeLeft(function () {
@@ -76,11 +65,18 @@ var App = (function () {
             Pages.body.slideOut('0');
         });
 
-        $('#menu-a-index').click(function () {
-            Pages.index.html('').prepend(App.render(templates.loading));
-            Client.timeline();
+        $('#menu-index').click(function () {
+            Modules.photo.timeline();
             Pages.body[0].scrollTop = 0;
             Pages.menu.trigger('swipeLeft');
+        });
+
+        $('#menu-logout').click(function () {
+            Modules.user.logout();
+        });
+
+        $('#menu-home').click(function () {
+
         });
     }
 
@@ -88,9 +84,10 @@ var App = (function () {
         init: function () {
             initExts();
             initPages();
-            initSplash();
             initBody();
             initMenu();
+        },
+        start: function () {
             Client.init();
         },
         log: function (msg) {
@@ -98,6 +95,12 @@ var App = (function () {
         },
         render: function (tpl, data) {
             return $(Handlebars.compile(tpl)(data));
+        },
+        getPage: function (name) {
+            if (!Pages[name]) {
+                Pages[name] = $('<div id="page-' + name + '"></div>').appendTo(Pages.body);
+            }
+            return Pages[name];
         }
     };
 })();
