@@ -14,6 +14,9 @@ var App = (function () {
             Pages.splash.slideOut('100%', function () {
                 $(this).css({display: 'none'});
             });
+            Pages.menu.css({display: 'block'});
+            Pages.window[0].scrollTo(0, 1);
+            Pages.body.trigger('swipeRight');
         });
     }
 
@@ -26,9 +29,10 @@ var App = (function () {
                 translate3d: left + ', 0, 0'
             }, 500, 'ease-in', callback);
         };
-        $.fn.scrollTo = function (el, offset) {
-            var top = el ? el.position().top + offset : offset;
-            this.attr('scrollTop', top);
+        $.fn.scrollToEl = function (el, offset) {
+            offset = offset || 0;
+            var top = el ? (el.position().top + offset) : offset;
+            this[0].scrollTo(0, top);
         };
         //Handlebars
         var now = new Date();
@@ -73,13 +77,11 @@ var App = (function () {
         });
 
         $('#menu-a-index').click(function () {
-            Pages.index.prepend(App.render(templates.loading));
-            Pages.menu.trigger('swipeLeft');
+            Pages.index.html('').prepend(App.render(templates.loading));
             Client.timeline();
-            Pages.body.scrollTo();
+            Pages.body[0].scrollTop = 0;
+            Pages.menu.trigger('swipeLeft');
         });
-
-        Pages.menu.show();
     }
 
     return {

@@ -9,42 +9,60 @@ var Callbacks = (function () {
             Pages.document.trigger('login-success');
         },
         v2_event_list: function (rsp) {
-            var list = App.render(templates.photos, rsp.data);
-            list.forEach(function (li) {
-                var like = $(li).find('a.op-like');
-                var photo = $(li).find('div.photo-wrapper');
-                var func = function () {
-                    var $this = $(this);
-                    if (!$this.data('like-status')) {
-                        Client.like($this.data('id'));
-                        $this.find('span.glyphicon').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart').addClass('red');
-                        $this.find('span.op-num').html(parseInt($this.find('span.op-num').html()) + 1);
-                        $this.data('like-status', 'true');
+            Pages.index.data('since', rsp.data.since_id)
+                .data('next', rsp.data.havenextpage);
+
+            Pages.index.find('.loading').remove();
+            rsp.data.list.forEach(function (li) {
+                var $li = App.render(templates.photo, li);
+                var photo = $li.find('div.photo-wrapper');
+
+                var like = $li.find('a.op-like');
+                var likeFunc = function () {
+                    if (!like.data('like-status')) {
+                        Client.like($li.data('id'));
+                        like.find('span.glyphicon').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart').addClass('red');
+                        like.find('span.op-like-num').html(parseInt(like.find('span.op-like-num').html()) + 1);
+                        like.data('like-status', 'true');
                     }
                 };
-                like.tap(func);
-                like.click(function(){
+                like.tap(likeFunc).click(function () {
                     like.trigger('tap');
+                });
+
+                var comment = $li.find('a.op-comment');
+                var commentFunc = function () {
+                    if (!comment.hasClass('on')) {
+                        comment.addClass('on');
+                        App.render(templates.commentForm).appendTo($li)
+                            .on('submit',function () {
+                                alert('submit!');
+                                return false;
+                            }).find('input').tap(function(){
+                                $(this).focus();
+                            }).tap();
+                    }
+                };
+
+                $li.find('a.op-comment').tap(commentFunc).click(function () {
+                    comment.trigger('tap');
                 });
                 photo.doubleTap(function (e) {
                     var heart = App.render(templates.likeHeart).appendTo(photo);
                     like.triggerHandler('tap');
-                    heart.fadeIn('fast', function(){
+                    heart.animate({opacity: 1}, 200, 'ease-in', function () {
                         setTimeout(function () {
                             heart.remove();
-                        }, 750);
+                        }, 400);
                     });
                     e.stopPropagation();
                     e.preventDefault();
                     return false;
                 });
+                Pages.index.append($li);
             });
 
-            Pages.index.find('.loading').remove();
-            Pages.index.data('since', rsp.data.since_id)
-                .data('next', rsp.data.havenextpage)
-                .append(list)
-                .append(App.render(templates.loading))
+            Pages.index.append(App.render(templates.loading))
                 .data('loading', 0);
 
             Pages.body.on('scroll', function (e) {
