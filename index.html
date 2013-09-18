@@ -19,7 +19,7 @@
     <script src="assets/js/bootstrap.js"></script>
 </head>
 <body>
-<div style="position: fixed;bottom:0;z-index: 999;">
+<div style="position: fixed;bottom:0;right:0;z-index: 999;">
     <button onclick="Pages.menu.trigger('swipeLeft');">left</button>
     <button onclick="Pages.index.trigger('swipeRight');">right</button>
 </div>
@@ -47,18 +47,18 @@
 
     <div id="menu-left" style="display: none;">
         <dl>
-            <dt><img src="" width="64" height="64" class="avatar" /></dt>
+            <dt><img src="" class="avatar img-circle img-responsive" /></dt>
             <dd>
-                <h2 class="name">&nbsp;</h2>
-                <p class="signature">&nbsp;</p>
+                <h5 class="name">&nbsp;</h5>
             </dd>
         </dl>
         <ul>
-            <li><a href="javascript:void(0);" id="menu-index">首页</a></li>
-            <li><a href="javascript:void(0);" id="menu-home">我的主页</a></li>
-            <li><a href="javascript:void(0);" id="menu-settings">设置</a></li>
-            <li><a href="javascript:void(0);" id="menu-about">关于</a></li>
-            <li><a href="javascript:void(0);" id="menu-logout">退出</a></li>
+            <li><a href="javascript:void(0);" id="menu-index"><span class="glyphicon glyphicon-home"></span>首页</a></li>
+            <li><a href="javascript:void(0);" id="menu-home"><span class="glyphicon glyphicon-user"></span>我的</a></li>
+            <li><a href="javascript:void(0);" id="menu-message"><span class="glyphicon glyphicon-envelope"></span>消息</a></li>
+            <li><a href="javascript:void(0);" id="menu-settings"><span class="glyphicon glyphicon-cog"></span>设置</a></li>
+            <li><a href="javascript:void(0);" id="menu-about"><span class="glyphicon glyphicon-info-sign"></span>关于</a></li>
+            <li><a href="javascript:void(0);" id="menu-logout"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
         </ul>
     </div>
 

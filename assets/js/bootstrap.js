@@ -6,7 +6,7 @@ $(function () {
     });
 
     App.init();
-    require(['user', 'photo'], function () {
+    require(['user', 'photo', 'system'], function () {
         App.start();
     });
 });

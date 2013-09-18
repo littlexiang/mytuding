@@ -28,5 +28,20 @@ var templates = {
         <input type="text" class="form-control"/>\
         </div>\
     </div>',
-    comments: '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>'
+    comments: '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>',
+
+    about: '<div class="about">\
+    <h2>导演</h2>\
+    <p>@劣头翔-SH</p>\
+    <h2>产品经理</h2>\
+    <p>@劣头翔-SH</p>\
+    <h2>UI</h2>\
+    <p>@劣头翔-SH</p>\
+    <h2>美工</h2>\
+    <p>@劣头翔-SH</p>\
+    <h2>后端程序</h2>\
+    <p>@劣头翔-SH</p>\
+    <h2>前端程序</h2>\
+    <p>@劣头翔-SH</p>\
+        </div>'
 };

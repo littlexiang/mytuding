@@ -1,9 +1,6 @@
 var Pages = {};
 var Callbacks = {};
-var Modules = {
-    user: {},
-    photo: {}
-};
+var Modules = {};
 
 var App = (function () {
     function initPages() {
@@ -75,8 +72,8 @@ var App = (function () {
             Modules.user.logout();
         });
 
-        $('#menu-home').click(function () {
-
+        $('#menu-about').click(function () {
+            Modules.system.about();
         });
     }
 
@@ -96,9 +93,10 @@ var App = (function () {
         render: function (tpl, data) {
             return $(Handlebars.compile(tpl)(data));
         },
-        getPage: function (name) {
+        getPage: function (name, content) {
+            Pages.body.html("");
             if (!Pages[name]) {
-                Pages[name] = $('<div id="page-' + name + '"></div>').appendTo(Pages.body);
+                Pages[name] = $('<div id="page-' + name + '"></div>').append(content).appendTo(Pages.body);
             }
             return Pages[name];
         }

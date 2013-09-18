@@ -1,3 +1,4 @@
+Modules.user = {};
 Modules.user.login = (function () {
     var $form = $('#login-form');
     Callbacks.security_login = function (rsp) {

@@ -1,3 +1,4 @@
+Modules.photo = {};
 Modules.photo.timeline = (function () {
     Callbacks.v2_event_list = function (rsp) {
         var $index = App.getPage('index');
