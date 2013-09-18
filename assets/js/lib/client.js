@@ -16,10 +16,9 @@ var Client = (function () {
             this.webSocket.onmessage = this.reqCallback;
 
             this.webSocket.onclose = function () {
-                this.connect();
+                Client.connect();
             };
             this.webSocket.onerror = function () {
-//                this.connect();
             };
         },
         req: function (cmd, data, files) {
@@ -90,6 +89,15 @@ var Client = (function () {
             uid = uid || this._uid;
             this.req('v2_user_getuser', {
                 user_id: uid
+            });
+        },
+        userPhotos: function (uid, since_id){
+            uid = uid || this._uid;
+            this.req('v2_user_photos', {
+                user_id: uid,
+                since_id: since_id,
+                num: 18,
+                mode: 0
             });
         }
     };

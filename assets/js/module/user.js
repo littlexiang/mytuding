@@ -48,14 +48,21 @@ Modules.user.logout = (function () {
 })();
 
 Modules.user.home = (function () {
-    Callbacks.v2_user_getuser = function(rsp){
-        var $home = App.getPage('home', App.render(templates.home, rsp.data));
+    Callbacks.v2_user_getuser = function (rsp) {
+        var $home = App.getPage('home', App.render(templates.home, rsp.data), true);
         $home.addClass('user-home-background').css({
             'background-image': 'url(' + rsp.data.background_url + ')'
         });
     };
+    Callbacks.v2_user_photos = function (rsp) {
+        App.getPage('home', App.render(templates.thumbs, rsp.data.photos))
+            .data('next', rsp.data.photos.havenextpage)
+            .data('since', rsp.data.photos.since_id);
+    };
 
     return function () {
+        App.showPage('home');
         Client.userDetail();
+        Client.userPhotos();
     }
 })();

@@ -42,16 +42,20 @@ Modules.photo.timeline = (function () {
             photo.doubleTap(function (e) {
                 var heart = App.render(templates.likeHeart).appendTo(photo);
                 like.triggerHandler('tap');
-                heart.animate({opacity: 0.8}, 200, 'ease', function () {
+                heart.animate({opacity: 1}, 200, 'ease-in', function () {
                     setTimeout(function () {
                         heart.remove();
-                    }, 400);
+                    }, 500);
                 });
                 e.stopPropagation();
                 e.preventDefault();
                 return false;
             });
         });
+
+        if ($index.data('reload')){
+            $index.html('');
+        }
         $index.append(content)
             .append(App.render(templates.loading))
             .data('loading', 0);
@@ -68,8 +72,9 @@ Modules.photo.timeline = (function () {
     };
 
     return function (since_id) {
+        var $index = App.showPage('index');
         if (!since_id) {
-            App.getPage('index').html('').prepend(App.render(templates.loading));
+            $index.data('reload', true).prepend(App.render(templates.loading));
         }
         Client.timeline(since_id);
     }

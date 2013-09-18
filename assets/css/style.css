@@ -97,6 +97,11 @@ h4, h5, h6 {
     position: relative;
     text-align: center;
     vertical-align: middle;
+    /*-webkit-transform:translate3d(0,0,0);*/
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    min-height: 200px;
+    background-color: #ccc;
 }
 
 .photo-like-heart {
@@ -108,8 +113,8 @@ h4, h5, h6 {
     font-size: 8em;
     text-shadow: 0 2px 2px #000;
     opacity: 0;
-    -webkit-transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden;
+    /*-webkit-transform-style: preserve-3d;*/
+    /*-webkit-backface-visibility: hidden;*/
 }
 
 .photo-ops {

@@ -22,7 +22,7 @@ var App = (function () {
             left = left || '100%';
             this.animate({
                 translate3d: left + ', 0, 0'
-            }, 500, 'ease-in', callback);
+            }, 350, 'ease-in', callback);
             return this;
         };
         $.fn.scrollToEl = function (el, offset) {
@@ -106,12 +106,23 @@ var App = (function () {
         render: function (tpl, data) {
             return $(Handlebars.compile(tpl)(data));
         },
-        getPage: function (name, content) {
-            Pages.body.children('div').hide();
+        getPage: function (name, content, prepend) {
             if (!Pages[name]) {
-                Pages[name] = $('<div id="page-' + name + '"></div>').append(content).appendTo(Pages.body);
+                Pages[name] = $('<div id="page-' + name + '"></div>').appendTo(Pages.body);
             }
-            return Pages[name].show();
+            if (content){
+                if (prepend){
+                    Pages[name].prepend(content);
+                }else{
+                    Pages[name].append(content);
+                }
+            }
+            return Pages[name];
+        },
+        showPage: function(name){
+            var page = this.getPage(name);
+            page.show().siblings().hide();
+            return page;
         }
     };
 })();

@@ -22,7 +22,7 @@ templates.photos = '{{#list}}\
 </div>\
 {{/list}}';
 
-templates.likeHeart = '<div class="red photo-like-heart"><span class="glyphicon glyphicon-heart"></span></div>';
+templates.likeHeart = '<div class="red photo-like-heart glyphicon glyphicon-heart"></div>';
 
 templates.loading = '<div class="loading">Loading ...</div>';
 
@@ -57,4 +57,10 @@ templates.home = '<div class="user-home-body">\
             </dd>\
         </dl>\
     </div>\
+</div>';
+
+templates.thumbs = '<div class="user-home-photo">\
+<div class="row">\
+{{#list}}<div class="col-sm-4"><img class="img-responsive" src="{{thumbnail_url}}" /></div>{{/list}}\
+</div>\
 </div>';
