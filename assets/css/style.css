@@ -339,8 +339,18 @@ h4, h5, h6 {
     position: relative;
     padding: 10px;
 }
-.user-home-info dd h5{
+.user-home-info .name{
     font-size: 1.2em;
     color: #fff;
-    opacity: 1;
+    margin-bottom: 5px;
+}
+
+.user-home-info .location{
+    font-size: 0.8em;
+    float: right;
+}
+.user-home-info .signature{
+    font-size: 0.8em;
+    color: #e5e5e5;
+    font-style: italic;
 }

@@ -52,8 +52,8 @@ templates.home = '<div class="user-home-body">\
         <dl class="user-home-info">\
             <dt><img src="{{thumbnail_url}}" class="avatar img-circle img-responsive" /></dt>\
             <dd>\
-                <h5 class="name">{{display_name}}</h5>\
-                \
+                <h5 class="name">{{display_name}} <span class="location">@{{locdesc}}</span></h5>\
+                <p class="signature">{{about_me}}</p>\
             </dd>\
         </dl>\
     </div>\
