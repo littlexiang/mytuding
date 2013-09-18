@@ -10,7 +10,8 @@ var App = (function () {
         Pages.splash = $('#page-splash');
         Pages.menu = $('#menu-left');
 
-        var h = Pages.document.height();
+        var h = Pages.window.height();
+        $('body').height(h);
         Pages.body.height(h);
         Pages.splash.height(h);
         Pages.menu.height(h);
