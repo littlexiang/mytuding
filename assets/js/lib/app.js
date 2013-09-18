@@ -53,19 +53,16 @@ var App = (function () {
         Pages.body.swipeRight(function () {
             Pages.body.slideOut('80%');
         }).swipeLeft(function () {
-                Pages.body.slideOut('0');
+                Pages.body.slideOut('0%');
             });
     }
 
     function initMenu() {
         Pages.menu.swipeLeft(function () {
-            Pages.body.slideOut('0');
+            Pages.body.trigger('swipeLeft');
         });
-
         $('#menu-index').click(function () {
             Modules.photo.timeline();
-            Pages.body[0].scrollTop = 0;
-            Pages.menu.trigger('swipeLeft');
         });
 
         $('#menu-logout').click(function () {
@@ -75,6 +72,16 @@ var App = (function () {
         $('#menu-about').click(function () {
             Modules.system.about();
         });
+
+        $('#menu-home').click(function () {
+            Modules.user.home();
+        });
+
+        Pages.menu.find('ul a').click(function () {
+            Pages.body.trigger('swipeLeft');
+            Pages.body[0].scrollTop = 0;
+        });
+
     }
 
     return {
@@ -94,11 +101,11 @@ var App = (function () {
             return $(Handlebars.compile(tpl)(data));
         },
         getPage: function (name, content) {
-            Pages.body.html("");
+            Pages.body.children('div').hide();
             if (!Pages[name]) {
                 Pages[name] = $('<div id="page-' + name + '"></div>').append(content).appendTo(Pages.body);
             }
-            return Pages[name];
+            return Pages[name].show();
         }
     };
 })();

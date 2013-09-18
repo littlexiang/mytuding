@@ -1,5 +1,8 @@
 body {
     overflow: hidden;
+    max-width: 640px;
+    min-height: 900px;
+    position: relative;
 }
 
 a, a:hover, a:visited {
@@ -26,10 +29,6 @@ h4, h5, h6 {
 .datetime {
     color: #b3b3b3;
     font-style: oblique;
-}
-
-.nickname {
-    color: #666;
 }
 
 .avatar {
@@ -172,8 +171,6 @@ h4, h5, h6 {
 
 /*page*/
 .wrap {
-    max-width: 626px;
-    min-height: 500px;
     margin: 0 auto;
     padding: 0;
     position: absolute;
@@ -206,7 +203,8 @@ h4, h5, h6 {
     font-size: 1.5em;
     padding: 0.5em 20% 0.5em 1em;
 }
-#menu-left .glyphicon{
+
+#menu-left .glyphicon {
     margin-right: 0.5em;
 }
 
@@ -227,9 +225,9 @@ h4, h5, h6 {
     min-height: 48px;
 }
 
-#menu-left dd h5{
+#menu-left dd h5 {
     line-height: 48px;
-    margin:0;
+    margin: 0;
 }
 
 #menu-left ul {
@@ -281,4 +279,68 @@ h4, h5, h6 {
 #page-splash .splash-img {
     width: 100%;
     min-height: 400px;
+}
+
+#page-about {
+    text-align: center;
+    padding: 1em;
+    font-size: 1em;
+    text-shadow: 1px 1px 1px #030303;
+}
+
+/*home*/
+.user-home-background {
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-attachment: fixed;
+    background-size: 320px 220px;
+    position: relative;
+}
+
+.user-home-body{
+    max-width: 100%;
+    padding-top: 156px;
+}
+
+.user-home-heading {
+    min-height: 200px;
+}
+
+.user-home-info {
+    height: 64px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.user-home-info::before{
+    opacity: 0.7;
+    background-color: #000;
+    height: 64px;
+    width: 100%;
+    content: "";
+    z-index: 0;
+    position: absolute;
+}
+
+.user-home-info dt {
+    float: left;
+    width: 64px;
+    height: 64px;
+    position: relative;
+    padding: 0.5em;
+}
+
+.user-home-info dd {
+    vertical-align: middle;
+    margin-left: 64px;
+    overflow: hidden;
+    height: 64px;
+    position: relative;
+    padding: 10px;
+}
+.user-home-info dd h5{
+    font-size: 1.2em;
+    color: #fff;
+    opacity: 1;
 }

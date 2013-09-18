@@ -1,5 +1,5 @@
-var templates = {
-    photos: '{{#list}}\
+var templates = {};
+templates.photos = '{{#list}}\
 <div class="photo-detail-wrapper" data-id="{{id}}">\
     <div class="photo-wrapper">\
         <img class="img-responsive" src="{{url}}">\
@@ -20,28 +20,41 @@ var templates = {
         <a href="javascript:void(0);"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;{{forward_count}}</a>\
     </div>\
 </div>\
-{{/list}}',
-    likeHeart: '<div class="red photo-like-heart"><span class="glyphicon glyphicon-heart"></span></div>',
-    loading: '<div class="loading">Loading ...</div>',
-    commentForm: '<form role="form" class="photo-comment-form form-inline clearfix">\
+{{/list}}';
+
+templates.likeHeart = '<div class="red photo-like-heart"><span class="glyphicon glyphicon-heart"></span></div>';
+
+templates.loading = '<div class="loading">Loading ...</div>';
+
+templates.commentForm = '<form role="form" class="photo-comment-form form-inline clearfix">\
         <div class="form-group col-lg-12">\
         <input type="text" class="form-control"/>\
         </div>\
-    </div>',
-    comments: '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>',
+    </div>';
 
-    about: '<div class="about">\
-    <h2>导演</h2>\
-    <p>@劣头翔-SH</p>\
-    <h2>产品经理</h2>\
-    <p>@劣头翔-SH</p>\
-    <h2>UI</h2>\
-    <p>@劣头翔-SH</p>\
-    <h2>美工</h2>\
-    <p>@劣头翔-SH</p>\
-    <h2>后端程序</h2>\
-    <p>@劣头翔-SH</p>\
-    <h2>前端程序</h2>\
-    <p>@劣头翔-SH</p>\
-        </div>'
-};
+templates.comments = '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>';
+
+templates.about = '<div class="about">\
+   <h2>导演</h2>\
+   <p>@劣头翔-SH</p>\
+   <h2>产经</h2>\
+   <p>@劣头翔-SH</p>\
+   <h2>UI</h2>\
+   <p>@劣头翔-SH</p>\
+   <h2>美工</h2>\
+   <p>@劣头翔-SH</p>\
+   <h2>程序</h2>\
+   <p>@劣头翔-SH</p>\
+</div>';
+
+templates.home = '<div class="user-home-body">\
+    <div class="user-home-heading">\
+        <dl class="user-home-info">\
+            <dt><img src="{{thumbnail_url}}" class="avatar img-circle img-responsive" /></dt>\
+            <dd>\
+                <h5 class="name">{{display_name}}</h5>\
+                \
+            </dd>\
+        </dl>\
+    </div>\
+</div>';

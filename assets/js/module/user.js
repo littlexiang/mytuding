@@ -12,7 +12,8 @@ Modules.user.login = (function () {
     };
 
     Pages.document.on('login-success', function (e) {
-        Modules.photo.timeline();
+//        Modules.photo.timeline();
+        Modules.user.home();
         $form.hide();
         Pages.splash.slideOut('100%', function () {
             $(this).hide();
@@ -43,5 +44,18 @@ Modules.user.logout = (function () {
     return function () {
         Client.logout();
         Pages.splash.show().slideOut('0').find('#login-form').show();
+    }
+})();
+
+Modules.user.home = (function () {
+    Callbacks.v2_user_getuser = function(rsp){
+        var $home = App.getPage('home', App.render(templates.home, rsp.data));
+        $home.addClass('user-home-background').css({
+            'background-image': 'url(' + rsp.data.background_url + ')'
+        });
+    };
+
+    return function () {
+        Client.userDetail();
     }
 })();

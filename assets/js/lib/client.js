@@ -45,10 +45,10 @@ var Client = (function () {
                 return Callbacks[rsp.cmd](rsp);
             }
         },
-        getSid: function(){
+        getSid: function () {
             return this._sid;
         },
-        getUid: function(){
+        getUid: function () {
             return $this._uid;
         },
         isLogin: function () {
@@ -85,8 +85,13 @@ var Client = (function () {
                 placeid: photo_id,
                 canreduce: 0
             });
+        },
+        userDetail: function (uid) {
+            uid = uid || this._uid;
+            this.req('v2_user_getuser', {
+                user_id: uid
+            });
         }
-
     };
 })();
 

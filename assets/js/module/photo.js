@@ -20,9 +20,7 @@ Modules.photo.timeline = (function () {
                     like.data('like-status', 'true');
                 }
             };
-            like.tap(likeFunc).click(function () {
-                like.trigger('tap');
-            });
+            like.tap(likeFunc);
 
             var comment = $li.find('a.op-comment');
             var commentFunc = function () {
@@ -44,7 +42,7 @@ Modules.photo.timeline = (function () {
             photo.doubleTap(function (e) {
                 var heart = App.render(templates.likeHeart).appendTo(photo);
                 like.triggerHandler('tap');
-                heart.animate({opacity: 1}, 200, 'ease-in', function () {
+                heart.animate({opacity: 0.8}, 200, 'ease', function () {
                     setTimeout(function () {
                         heart.remove();
                     }, 400);
