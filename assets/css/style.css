@@ -1,7 +1,6 @@
 body {
     overflow: hidden;
     max-width: 640px;
-    min-height: 900px;
     position: relative;
 }
 
@@ -314,7 +313,7 @@ h4, h5, h6 {
 }
 
 .user-home-info::before{
-    opacity: 0.7;
+    opacity: 0.6;
     background-color: #000;
     height: 64px;
     width: 100%;

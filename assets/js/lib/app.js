@@ -9,6 +9,11 @@ var App = (function () {
         Pages.body = $('#page-body');
         Pages.splash = $('#page-splash');
         Pages.menu = $('#menu-left');
+
+        var h = Pages.document.height();
+        Pages.body.height(h);
+        Pages.splash.height(h);
+        Pages.menu.height(h);
     }
 
     function initExts() {
