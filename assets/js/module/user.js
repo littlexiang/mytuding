@@ -49,20 +49,24 @@ Modules.user.logout = (function () {
 
 Modules.user.home = (function () {
     Callbacks.v2_user_getuser = function (rsp) {
-        var $home = App.getPage('home', App.render(templates.home, rsp.data), true);
+        var $home = App.getPage('home');
+        $home.children('.user-home-body').remove();
+        $home.prepend(App.render(templates.home, rsp.data));
         $home.addClass('user-home-background').css({
             'background-image': 'url(' + rsp.data.background_url + ')'
         });
+        Client.userPhotos();
     };
     Callbacks.v2_user_photos = function (rsp) {
-        App.getPage('home', App.render(templates.thumbs, rsp.data.photos))
-            .data('next', rsp.data.photos.havenextpage)
+        var $home = App.getPage('home');
+        $home.children('.user-home-photos').remove();
+        $home.append(App.render(templates.thumbs, rsp.data.photos));
+        $home.data('next', rsp.data.photos.havenextpage)
             .data('since', rsp.data.photos.since_id);
     };
 
     return function () {
         App.showPage('home');
         Client.userDetail();
-        Client.userPhotos();
     }
 })();

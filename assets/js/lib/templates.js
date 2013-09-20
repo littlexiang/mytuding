@@ -59,8 +59,8 @@ templates.home = '<div class="user-home-body">\
     </div>\
 </div>';
 
-templates.thumbs = '<div class="user-home-photo">\
+templates.thumbs = '<div class="user-home-photos">\
 <div class="row">\
-{{#list}}<div class="col-sm-4"><img class="img-responsive" src="{{thumbnail_url}}" /></div>{{/list}}\
+{{#list}}<div class="col-sm-4"><img class="img-responsive" src="{{getThumb thumbnail_url "w240"}}" /></div>{{/list}}\
 </div>\
 </div>';

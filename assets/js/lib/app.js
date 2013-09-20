@@ -49,6 +49,9 @@ var App = (function () {
             }
             return options.inverse(this);
         });
+        Handlebars.registerHelper('getThumb', function (url, size) {
+            return url.replace('thumb_128', 'thumb_' + size);
+        });
     }
 
     function initBody() {
