@@ -74,6 +74,10 @@ h4, h5, h6 {
     margin-left: 54px;
 }
 
+.photo-author .location{
+    color: #666;
+}
+
 .photo-title {
     padding: 0 1em 1em 1em;
 }
@@ -100,8 +104,8 @@ h4, h5, h6 {
     /*-webkit-transform:translate3d(0,0,0);*/
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    min-height: 200px;
-    background-color: #ccc;
+    min-height: 300px;
+    background-color: #eee;
 }
 
 .photo-like-heart {

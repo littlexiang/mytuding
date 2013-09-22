@@ -2,6 +2,10 @@ Modules.photo = {};
 Modules.photo.timeline = (function () {
     Callbacks.v2_event_list = function (rsp) {
         var $index = App.getPage('index');
+        if ($index.data('reload')){
+            $index.html('');
+            $index.data('reload', 0);
+        }
         $index.data('since', rsp.data.since_id)
             .data('next', rsp.data.havenextpage);
 
@@ -53,9 +57,6 @@ Modules.photo.timeline = (function () {
             });
         });
 
-        if ($index.data('reload')){
-            $index.html('');
-        }
         $index.append(content)
             .append(App.render(templates.loading))
             .data('loading', 0);
@@ -74,7 +75,7 @@ Modules.photo.timeline = (function () {
     return function (since_id) {
         var $index = App.showPage('index');
         if (!since_id) {
-            $index.data('reload', true).prepend(App.render(templates.loading));
+            $index.data('reload', 1).prepend(App.render(templates.loading));
         }
         Client.timeline(since_id);
     }

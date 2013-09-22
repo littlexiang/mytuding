@@ -2,12 +2,13 @@ var templates = {};
 templates.photos = '{{#list}}\
 <div class="photo-detail-wrapper" data-id="{{id}}">\
     <div class="photo-wrapper">\
-        <img class="img-responsive" src="{{url}}">\
+        <img class="img-responsive" src="{{getThumb thumbnail_url "w640"}}">\
     </div>\
     <dl class="photo-author clearfix">\
         <dt><img src="{{User.thumbnail_url}}" class="img-responsive"></dt>\
         <dd>\
             <h5><span class="datetime pull-right">{{UTCConvert create_time}}</span> <span class="nickname">{{User.display_name}}</span></h5>\
+            <p class="location">{{#if location_desc}}@{{location_desc}}{{/if}}</p>\
         </dd>\
     </dl>\
     <div class="photo-title"><p>{{&title}}{{#each tag_new}}&nbsp;<a href="javascript:void(0);">#{{this}}</a>{{/each}}</p></div>\
@@ -27,7 +28,7 @@ templates.likeHeart = '<div class="red photo-like-heart glyphicon glyphicon-hear
 templates.loading = '<div class="loading">Loading ...</div>';
 
 templates.commentForm = '<form role="form" class="photo-comment-form form-inline clearfix">\
-        <div class="form-group col-lg-12">\
+        <div class="form-group ">\
         <input type="text" class="form-control"/>\
         </div>\
     </div>';
