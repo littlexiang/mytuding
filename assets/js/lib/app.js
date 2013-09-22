@@ -25,10 +25,17 @@ var App = (function () {
             }, 350, 'ease-in', callback);
             return this;
         };
-        $.fn.scrollToEl = function (el, offset) {
+        $.fn.smoothScroll = function (el, offset, duration) {
             offset = offset || 0;
-            var top = el ? (el.position().top + offset) : offset;
-            this[0].scrollTo(0, top);
+            var difference = el ? (el.position().top + offset) : offset;
+            var perTick = difference / duration * 10;
+            this.scrollToTimerCache = setTimeout(function() {
+                if (!isNaN(parseInt(perTick, 10))) {
+                    this[0].scrollTop = this.scrollTop() + perTick;
+                    this.smoothScroll(el, offset, duration - 10);
+                }
+            }.bind(this), 10);
+
             return this;
         };
         //Handlebars
@@ -50,7 +57,7 @@ var App = (function () {
             return options.inverse(this);
         });
         Handlebars.registerHelper('getThumb', function (url, size) {
-            return url.replace('thumb_128', 'thumb_' + size);
+            return url.replace(/_thumb_[^\.]+/i, (size ? ('_thumb_' + size) : ''));
         });
     }
 
@@ -103,8 +110,11 @@ var App = (function () {
         start: function () {
             Client.init();
         },
-        log: function (msg) {
-            console.log(msg);
+        log: function () {
+            var args = Array.prototype.slice.call(arguments);
+            args.forEach(function(val){
+                console.log(val);
+            })
         },
         render: function (tpl, data) {
             return $(Handlebars.compile(tpl)(data));

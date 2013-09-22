@@ -51,18 +51,17 @@ Modules.user.home = (function () {
     Callbacks.v2_user_getuser = function (rsp) {
         var $home = App.getPage('home');
         $home.children('.user-home-body').remove();
-        $home.prepend(App.render(templates.home, rsp.data));
-        $home.addClass('user-home-background').css({
-            'background-image': 'url(' + rsp.data.background_url + ')'
-        });
+        App.render(templates.home, rsp.data).prependTo($home);
         Client.userPhotos();
     };
     Callbacks.v2_user_photos = function (rsp) {
         var $home = App.getPage('home');
         $home.children('.user-home-photos').remove();
-        $home.append(App.render(templates.thumbs, rsp.data.photos));
+        var $thumbs = App.render(templates.thumbs, rsp.data.photos);
+        $home.append($thumbs);
         $home.data('next', rsp.data.photos.havenextpage)
             .data('since', rsp.data.photos.since_id);
+        Pages.body.smoothScroll($thumbs, -200, 300);
     };
 
     return function () {

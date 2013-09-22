@@ -48,6 +48,9 @@ templates.about = '<div class="about">\
 </div>';
 
 templates.home = '<div class="user-home-body">\
+    <div class="user-home-background">\
+        <img src="{{getThumb background_url ""}}" class="img-responsive"/>\
+    </div>\
     <div class="user-home-heading">\
         <dl class="user-home-info">\
             <dt><img src="{{thumbnail_url}}" class="avatar img-circle img-responsive" /></dt>\
@@ -57,10 +60,13 @@ templates.home = '<div class="user-home-body">\
             </dd>\
         </dl>\
     </div>\
+    <div class="user-home-nav">\
+        <ul class=""></ul>\
+    </div>\
 </div>';
 
 templates.thumbs = '<div class="user-home-photos">\
-<div class="row">\
-{{#list}}<div class="col-sm-4"><img class="img-responsive" src="{{getThumb thumbnail_url "w240"}}" /></div>{{/list}}\
-</div>\
+<ul class="thumbs list-inline">\
+{{#list}}<li><img class="img-responsive" src="{{getThumb thumbnail_url "w240"}}" /></li>{{/list}}\
+</ul>\
 </div>';

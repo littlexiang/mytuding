@@ -293,21 +293,34 @@ h4, h5, h6 {
 }
 
 /*home*/
+.user-home-wrap {
+
+}
+
 .user-home-background {
-    background-repeat: no-repeat;
-    background-clip: border-box;
-    background-attachment: fixed;
-    background-size: 320px 220px;
+    width: 100%;
     position: relative;
 }
 
-.user-home-body{
+.user-home-background img {
+    position: absolute;
+    top: 0;
+}
+
+.user-home-background:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.user-home-body {
     max-width: 100%;
-    padding-top: 156px;
+    top: 0;
 }
 
 .user-home-heading {
-    min-height: 200px;
+    width: 100%;
+    margin-top: -64px;
 }
 
 .user-home-info {
@@ -317,7 +330,7 @@ h4, h5, h6 {
     padding: 0;
 }
 
-.user-home-info::before{
+.user-home-info:before {
     opacity: 0.6;
     background-color: #000;
     height: 64px;
@@ -328,33 +341,63 @@ h4, h5, h6 {
 }
 
 .user-home-info dt {
+    position: relative;
     float: left;
     width: 64px;
     height: 64px;
-    position: relative;
     padding: 0.5em;
 }
 
 .user-home-info dd {
+    position: relative;
     vertical-align: middle;
     margin-left: 64px;
     overflow: hidden;
     height: 64px;
-    position: relative;
     padding: 10px;
 }
-.user-home-info .name{
+
+.user-home-info .name {
     font-size: 1.2em;
     color: #fff;
     margin-bottom: 5px;
 }
 
-.user-home-info .location{
+.user-home-info .location {
     font-size: 0.8em;
     float: right;
 }
-.user-home-info .signature{
+
+.user-home-info .signature {
     font-size: 0.8em;
     color: #e5e5e5;
     font-style: italic;
+}
+
+ul.thumbs {
+    padding-left: 1.5625%;
+}
+
+ul.thumbs li {
+    position: relative;
+    width: 31.75%;
+    overflow: hidden;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 1.5625%;
+    margin-bottom: 1%;
+    background-color: #fff;
+    padding: 0;
+    border: 1px solid #dddddd;
+}
+
+ul.thumbs li img {
+    position: absolute;
+    top: 0;
+}
+
+ul.thumbs li:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
 }
