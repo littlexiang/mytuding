@@ -34,8 +34,8 @@ templates.commentForm = '\
         <input type="text" class="form-control" name="content" placeholder="我是评论输入框"/>\
     </div>\
     <div class="form-group">\
-        <input type="submit" class="btn btn-success" value="发送"/>\
-        <input type="reset" class="btn btn-default pull-right" value="取消"/>\
+        <input type="reset" class="btn btn-default" value="取消"/>\
+        <input type="submit" class="btn btn-success pull-right" value="发送"/>\
     </div>\
 </form>';
 

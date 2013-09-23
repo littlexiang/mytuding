@@ -30,7 +30,7 @@ var App = (function () {
             z = z || '100%';
             this.animate({
                 translate3d: '0, ' + z + ', 0'
-            }, 350, 'ease-in', callback);
+            }, 150, 'ease-in', callback);
             return this;
         };
         $.fn.smoothScroll = function (el, offset, duration) {

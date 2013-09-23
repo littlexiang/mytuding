@@ -77,9 +77,7 @@ Modules.photo.like = (function () {
 
 Modules.photo.commentForm = (function () {
     return function (photo_id, comment_btn) {
-        App.log(comment_btn);
         var $div = App.getPage('popup');
-        console.log($div);
         //0px -> 0px cannot trigger callback ...
         $div.slideDown('1px', function () {
             $div.html('');
