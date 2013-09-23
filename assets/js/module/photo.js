@@ -2,7 +2,7 @@ Modules.photo = {};
 Modules.photo.timeline = (function () {
     Callbacks.v2_event_list = function (rsp) {
         var $index = App.getPage('index');
-        if ($index.data('reload')){
+        if ($index.data('reload')) {
             $index.html('');
             $index.data('reload', 0);
         }
@@ -26,23 +26,10 @@ Modules.photo.timeline = (function () {
             };
             like.tap(likeFunc);
 
-            var comment = $li.find('a.op-comment');
-            var commentFunc = function () {
-                if (!comment.hasClass('on')) {
-                    comment.addClass('on');
-                    App.render(templates.commentForm).appendTo($li)
-                        .on('submit',function () {
-                            alert('submit!');
-                            return false;
-                        }).find('input').tap(function () {
-                            $(this).focus();
-                        }).tap();
-                }
-            };
-
-            $li.find('a.op-comment').tap(commentFunc).click(function () {
-                comment.trigger('tap');
+            $li.find('a.op-comment').tap(function () {
+                Modules.photo.commentForm($li.data('id'));
             });
+
             photo.doubleTap(function (e) {
                 var heart = App.render(templates.likeHeart).appendTo(photo);
                 like.triggerHandler('tap');
@@ -87,3 +74,41 @@ Modules.photo.like = (function () {
     return function () {
     };
 })();
+
+Modules.photo.commentForm = (function () {
+    return function (photo_id) {
+        var $div = App.getPage('popup');
+        $div.html('').slideDown('100%', function () {
+            var $form = App.render(templates.commentForm).appendTo($div);
+            var $input = $form.find('input[name="content"]');
+            $form.one('submit', function (e) {
+                var content = $input.val();
+                if (content) {
+                    Modules.photo.comment(photo_id, content);
+                }
+                e.preventDefault();
+                return false;
+            });
+            $form.one('reset', function () {
+                $form.slideDown('100%', function () {
+                    $(this).remove();
+                });
+            });
+            $div.slideDown('-100%', function () {
+                $input.focus();
+            });
+        });
+    }
+})();
+
+Modules.photo.comment = (function () {
+    Callbacks.v2_place_comment = function () {
+        App.getPage('popup').slideDown('100%', function () {
+            $(this).find('#comment-form').remove();
+        });
+    };
+    return function (photo_id, content) {
+        Client.comment(photo_id, content);
+    }
+})();
+

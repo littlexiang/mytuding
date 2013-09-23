@@ -27,11 +27,16 @@ templates.likeHeart = '<div class="red photo-like-heart glyphicon glyphicon-hear
 
 templates.loading = '<div class="loading">Loading ...</div>';
 
-templates.commentForm = '<form role="form" class="photo-comment-form form-inline clearfix">\
-        <div class="form-group ">\
-        <input type="text" class="form-control"/>\
-        </div>\
-    </div>';
+templates.commentForm = '\
+<form role="form" class="form-inline" id="comment-form" onsubmit="return false;">\
+    <div class="form-group">\
+        <input type="text" class="form-control" name="content" placeholder="我是评论输入框"/>\
+    </div>\
+    <div class="form-group">\
+        <input type="submit" class="btn btn-success" value="发送"/>\
+        <input type="reset" class="btn btn-default pull-right" value="取消"/>\
+    </div>\
+</form>';
 
 templates.comments = '<div class="comments">{{#each list}}<dl class="comment"><dt></dt><dd></dd></dl>{{/each}}</div>';
 

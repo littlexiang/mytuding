@@ -6,6 +6,7 @@ var App = (function () {
     function initPages() {
         Pages.window = $(window);
         Pages.document = $(document);
+        Pages.popup = $('#popup');
         Pages.body = $('#page-body');
         Pages.splash = $('#page-splash');
         Pages.menu = $('#menu-left');
@@ -18,10 +19,17 @@ var App = (function () {
     }
 
     function initExts() {
-        $.fn.slideOut = function (left, callback) {
-            left = left || '100%';
+        $.fn.slideOut = function (x, callback) {
+            x = x || '100%';
             this.animate({
-                translate3d: left + ', 0, 0'
+                translate3d: x + ', 0, 0'
+            }, 350, 'ease-in', callback);
+            return this;
+        };
+        $.fn.slideDown = function (z, callback) {
+            z = z || '100%';
+            this.animate({
+                translate3d: '0, ' + z + ', 0'
             }, 350, 'ease-in', callback);
             return this;
         };
@@ -29,7 +37,7 @@ var App = (function () {
             offset = offset || 0;
             var difference = el ? (el.position().top + offset) : offset;
             var perTick = difference / duration * 10;
-            this.scrollToTimerCache = setTimeout(function() {
+            this.scrollToTimerCache = setTimeout(function () {
                 if (!isNaN(parseInt(perTick, 10))) {
                     this[0].scrollTop = this.scrollTop() + perTick;
                     this.smoothScroll(el, offset, duration - 10);
@@ -112,7 +120,7 @@ var App = (function () {
         },
         log: function () {
             var args = Array.prototype.slice.call(arguments);
-            args.forEach(function(val){
+            args.forEach(function (val) {
                 console.log(val);
             })
         },
@@ -123,16 +131,16 @@ var App = (function () {
             if (!Pages[name]) {
                 Pages[name] = $('<div id="page-' + name + '"></div>').appendTo(Pages.body);
             }
-            if (content){
-                if (prepend){
+            if (content) {
+                if (prepend) {
                     Pages[name].prepend(content);
-                }else{
+                } else {
                     Pages[name].append(content);
                 }
             }
             return Pages[name];
         },
-        showPage: function(name){
+        showPage: function (name) {
             var page = this.getPage(name);
             page.show().siblings().hide();
             return page;

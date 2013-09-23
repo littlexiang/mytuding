@@ -99,6 +99,13 @@ var Client = (function () {
                 num: 18,
                 mode: 0
             });
+        },
+        comment: function (photo_id, content){
+            this.req('v2_place_comment', {
+                user_id: this._uid,
+                place_id: photo_id,
+                content: content
+            });
         }
     };
 })();

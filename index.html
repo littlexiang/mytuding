@@ -18,11 +18,7 @@
     <script src="assets/js/lib/templates.js"></script>
     <script src="assets/js/bootstrap.js"></script>
 </head>
-<body>
-<div style="position: fixed;bottom:0;right:0;z-index: 999;">
-    <button onclick="Pages.body.trigger('swipeLeft');">left</button>
-    <button onclick="Pages.body.trigger('swipeRight');">right</button>
-</div>
+<body id="document-body">
 
 <div class="wrap">
 
@@ -63,7 +59,7 @@
     </div>
 
     <div class="wrap" id="page-body"></div>
-
+    <div id="popup"></div>
 </div>
 </body>
 </html>
