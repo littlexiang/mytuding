@@ -20,14 +20,14 @@ Modules.photo.timeline = (function () {
                 if (!like.data('like-status')) {
                     Client.like($li.data('id'));
                     like.find('span.glyphicon').removeClass('glyphicon-heart-empty').addClass('glyphicon-heart').addClass('red');
-                    like.find('span.op-like-num').html(parseInt(like.find('span.op-like-num').html()) + 1);
+                    like.find('span.num').html(parseInt(like.find('span.num').html()) + 1);
                     like.data('like-status', 'true');
                 }
             };
             like.tap(likeFunc);
 
             $li.find('a.op-comment').tap(function () {
-                Modules.photo.commentForm($li.data('id'));
+                Modules.photo.commentForm($li.data('id'), this);
             });
 
             photo.doubleTap(function (e) {
@@ -76,22 +76,27 @@ Modules.photo.like = (function () {
 })();
 
 Modules.photo.commentForm = (function () {
-    return function (photo_id) {
+    return function (photo_id, comment_btn) {
+        App.log(comment_btn);
         var $div = App.getPage('popup');
-        $div.html('').slideDown('100%', function () {
+        console.log($div);
+        //0px -> 0px cannot trigger callback ...
+        $div.slideDown('1px', function () {
+            $div.html('');
             var $form = App.render(templates.commentForm).appendTo($div);
             var $input = $form.find('input[name="content"]');
             $form.one('submit', function (e) {
+                $div.slideDown('0px');
                 var content = $input.val();
                 if (content) {
-                    Modules.photo.comment(photo_id, content);
+                    Modules.photo.comment(photo_id, content, comment_btn);
                 }
                 e.preventDefault();
                 return false;
             });
             $form.one('reset', function () {
-                $form.slideDown('100%', function () {
-                    $(this).remove();
+                $div.slideDown('0px', function () {
+                    $form.remove();
                 });
             });
             $div.slideDown('-100%', function () {
@@ -102,12 +107,12 @@ Modules.photo.commentForm = (function () {
 })();
 
 Modules.photo.comment = (function () {
-    Callbacks.v2_place_comment = function () {
-        App.getPage('popup').slideDown('100%', function () {
-            $(this).find('#comment-form').remove();
-        });
-    };
-    return function (photo_id, content) {
+
+    return function (photo_id, content, comment_btn) {
+        Callbacks.v2_place_comment = function () {
+            $(comment_btn).find('span.num').html(parseInt($(comment_btn).find('span.num').html()) + 1);
+        };
+
         Client.comment(photo_id, content);
     }
 })();

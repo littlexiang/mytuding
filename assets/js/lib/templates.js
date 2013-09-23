@@ -13,10 +13,11 @@ templates.photos = '{{#list}}\
     </dl>\
     <div class="photo-title"><p>{{&title}}{{#each tag_new}}&nbsp;<a href="javascript:void(0);">#{{this}}</a>{{/each}}</p></div>\
     <div class="photo-ops clearfix">\
-        <a href="javascript:void(0);" class="op-comment"><span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;{{comment_count}}</a>\
+        <a href="javascript:void(0);" class="op-comment"><span class="glyphicon glyphicon-comment"></span>\
+            &nbsp;<span class="num">{{comment_count}}</span></a>\
         <a href="javascript:void(0);" class="op-like" data-like-status="{{is_good}}">\
         {{#isTrue is_good}}<span class="glyphicon glyphicon-heart red"></span>{{else}}<span class="glyphicon glyphicon-heart-empty"></span>{{/isTrue}}\
-            &nbsp;<span class="op-like-num">{{good_count}}</span>\
+            &nbsp;<span class="num">{{good_count}}</span>\
         </a>\
         <a href="javascript:void(0);"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;{{forward_count}}</a>\
     </div>\
