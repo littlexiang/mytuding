@@ -48,7 +48,7 @@ Modules.photo.timeline = (function () {
             .append(App.render(templates.loading))
             .data('loading', 0);
 
-        Pages.body.on('scroll', function (e) {
+        Pages.body.off('scroll').on('scroll', function (e) {
             if (!$index.data('loading')
                 && ($index.data('next'))
                 && (($index.find('.loading').position().top - Pages.body.height()) < 500)
