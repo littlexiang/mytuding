@@ -51,7 +51,7 @@ Modules.photo.timeline = (function () {
         Pages.body.on('scroll', function (e) {
             if (!$index.data('loading')
                 && ($index.data('next'))
-                && (($index.find('.loading').position().top - Pages.body.height()) < 500)
+                && (($index.find('.loading').position().top - Pages.body.height()) < 1000)
                 ) {
                 $index.data('loading', 1);
                 Modules.photo.timeline($index.data('since'));
