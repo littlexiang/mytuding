@@ -138,6 +138,7 @@ var App = (function () {
                     Pages[name].append(content);
                 }
             }
+            Pages.body.off('scroll');
             return Pages[name];
         },
         showPage: function (name) {

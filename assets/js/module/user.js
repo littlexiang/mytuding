@@ -65,8 +65,6 @@ Modules.user.home = (function () {
     };
 
     return function () {
-        Pages.body.off('scroll');
-
         App.showPage('home');
         Client.userDetail();
     }

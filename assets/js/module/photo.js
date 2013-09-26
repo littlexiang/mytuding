@@ -48,7 +48,7 @@ Modules.photo.timeline = (function () {
             .append(App.render(templates.loading))
             .data('loading', 0);
 
-        Pages.body.off('scroll').on('scroll', function (e) {
+        Pages.body.on('scroll', function (e) {
             if (!$index.data('loading')
                 && ($index.data('next'))
                 && (($index.find('.loading').position().top - Pages.body.height()) < 500)
@@ -84,6 +84,7 @@ Modules.photo.commentForm = (function () {
             var $form = App.render(templates.commentForm).appendTo($div);
             var $input = $form.find('input[name="content"]');
             $form.one('submit', function (e) {
+                $input.blur();
                 $div.slideDown('0px');
                 var content = $input.val();
                 if (content) {
