@@ -1,4 +1,4 @@
-var Pages = {};
+var Pages = {subpage: {}};
 var Callbacks = {};
 var Modules = {};
 
@@ -6,13 +6,17 @@ var App = (function () {
     function initPages() {
         Pages.window = $(window);
         Pages.document = $(document);
+        Pages.documentBody = $('#document-body');
         Pages.popup = $('#popup');
         Pages.body = $('#page-body');
         Pages.splash = $('#page-splash');
         Pages.menu = $('#menu-left');
 
         var h = Pages.window.height();
-        $('body').height(h);
+        Pages.window.on('scroll', function(){
+            return false;
+        });
+        Pages.documentBody.height(h);
         Pages.body.height(h);
         Pages.splash.height(h);
         Pages.menu.height(h);
@@ -145,6 +149,13 @@ var App = (function () {
             var page = this.getPage(name);
             page.show().siblings().hide();
             return page;
+        },
+        getSubPage: function (name) {
+            if (!Pages.subpage[name]) {
+                Pages.subpage[name] = $('<div id="page-' + name + '" class="subpage"></div>').appendTo(Pages.body);
+            }
+            Pages.body.off('scroll');
+            return Pages.subpage[name].slideOut('-100%');
         }
     };
 })();

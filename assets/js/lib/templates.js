@@ -1,5 +1,5 @@
 var templates = {};
-templates.photos = '{{#list}}\
+templates.photo = '\
 <div class="photo-detail-wrapper" data-id="{{id}}">\
     <div class="photo-wrapper">\
         <img class="img-responsive" src="{{getThumb thumbnail_url "w640"}}">\
@@ -21,8 +21,7 @@ templates.photos = '{{#list}}\
         </a>\
         <a href="javascript:void(0);"><span class="glyphicon glyphicon-retweet"></span>&nbsp;&nbsp;{{forward_count}}</a>\
     </div>\
-</div>\
-{{/list}}';
+</div>';
 
 templates.likeHeart = '<div class="red photo-like-heart glyphicon glyphicon-heart"></div>';
 

@@ -10,9 +10,10 @@ Modules.photo.timeline = (function () {
             .data('next', rsp.data.havenextpage);
 
         $index.find('.loading').remove();
-        var content = App.render(templates.photos, rsp.data);
-        content.forEach(function (li) {
-            var $li = $(li);
+        var content = $('');
+
+        rsp.data.list.forEach(function(li){
+            var $li = App.render(templates.photo, li);
             var photo = $li.find('div.photo-wrapper');
 
             var like = $li.find('a.op-like');
@@ -35,25 +36,26 @@ Modules.photo.timeline = (function () {
                 like.triggerHandler('tap');
                 heart.animate({opacity: 1}, 200, 'ease-in', function () {
                     setTimeout(function () {
-                        heart.remove();
+                        heart.animate({opacity: 0}, 200, 'ease-out');
                     }, 500);
                 });
                 e.stopPropagation();
                 e.preventDefault();
                 return false;
+            }).tap(function(e){
+                Modules.photo.getPhoto(li);
             });
+
+            $index.append($li);
         });
 
-        $index.append(content)
-            .append(App.render(templates.loading))
-            .data('loading', 0);
+        $index.data('loading', 0);
 
         Pages.body.on('scroll', function (e) {
             if (!$index.data('loading')
                 && ($index.data('next'))
-                && (($index.find('.loading').position().top - Pages.body.height()) < 1000)
+                && (($index.children('.photo-detail-wrapper').last().position().top - Pages.body.height()) < 1500)
                 ) {
-                $index.data('loading', 1);
                 Modules.photo.timeline($index.data('since'));
             }
         });
@@ -61,9 +63,14 @@ Modules.photo.timeline = (function () {
 
     return function (since_id) {
         var $index = App.showPage('index');
-        if (!since_id) {
-            $index.data('reload', 1).prepend(App.render(templates.loading));
+        if (!$index.data('loading')) {
+            if (!since_id){
+                $index.data('reload', 1).prepend(App.render(templates.loading));
+            }else{
+                $index.append(App.render(templates.loading));
+            }
         }
+        $index.data('loading', 1);
         Client.timeline(since_id);
     }
 })();
@@ -73,6 +80,13 @@ Modules.photo.like = (function () {
     };
     return function () {
     };
+})();
+
+Modules.photo.getPhoto = (function(){
+
+    return function(Photo){
+        App.getPage('photo-' + Photo.id);
+    }
 })();
 
 Modules.photo.commentForm = (function () {

@@ -61,7 +61,6 @@ Modules.user.home = (function () {
         $home.append($thumbs);
         $home.data('next', rsp.data.photos.havenextpage)
             .data('since', rsp.data.photos.since_id);
-        Pages.body.smoothScroll($thumbs, -200, 300);
     };
 
     return function () {

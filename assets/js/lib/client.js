@@ -7,7 +7,7 @@ var Client = (function () {
             this.connect();
         },
         connect: function () {
-            var url = 'ws://littlexiang.me:8080/';
+            var url = 'ws://gypsii.xicp.net:8080/';
             this.webSocket = new WebSocket(url, 'echo-protocol');
             this.webSocket.onopen = function () {
                 Modules.user.login();
