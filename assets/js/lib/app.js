@@ -1,4 +1,4 @@
-var Pages = {subpage: {}};
+var Pages = {};
 var Callbacks = {};
 var Modules = {};
 
@@ -9,17 +9,16 @@ var App = (function () {
         Pages.documentBody = $('#document-body');
         Pages.popup = $('#popup');
         Pages.body = $('#page-body');
+        Pages.subBody = $('#subpage-body');
         Pages.splash = $('#page-splash');
         Pages.menu = $('#menu-left');
+        Pages.subPages = {};
 
         var h = Pages.window.height();
-        Pages.window.on('scroll', function(){
+        Pages.window.on('scroll', function () {
             return false;
         });
         Pages.documentBody.height(h);
-        Pages.body.height(h);
-        Pages.splash.height(h);
-        Pages.menu.height(h);
     }
 
     function initExts() {
@@ -133,8 +132,9 @@ var App = (function () {
         },
         getPage: function (name, content, prepend) {
             if (!Pages[name]) {
-                Pages[name] = $('<div id="page-' + name + '"></div>').appendTo(Pages.body);
+                Pages[name] = $('<div id="page-' + name + '" class="page"></div>');
             }
+            Pages[name].prependTo(Pages.body).show().siblings('div.page').hide();
             if (content) {
                 if (prepend) {
                     Pages[name].prepend(content);
@@ -145,17 +145,28 @@ var App = (function () {
             Pages.body.off('scroll');
             return Pages[name];
         },
-        showPage: function (name) {
-            var page = this.getPage(name);
-            page.show().siblings().hide();
-            return page;
-        },
         getSubPage: function (name) {
-            if (!Pages.subpage[name]) {
-                Pages.subpage[name] = $('<div id="page-' + name + '" class="subpage"></div>').appendTo(Pages.body);
+            if (!Pages.subPages[name]) {
+                Pages.subPages[name] = $('<div id="page-' + name + '" class="subpage wrap"></div>').prependTo(Pages.documentBody);
             }
-            Pages.body.off('scroll');
-            return Pages.subpage[name].slideOut('-100%');
+            Pages.subPages[name].swipeRight(function (e) {
+                var $page = $(this);
+                App.log(Object.keys(Pages.subPages).length);
+                if (Object.keys(Pages.subPages).length) {
+                    Pages.body.show();
+                    Pages.subBody.hide();
+                }
+                $page.slideOut('0%', function () {
+                    $page.remove();
+                    delete Pages.subPages[name];
+                });
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            }).slideOut('-100%', function () {
+                    Pages.body.hide();
+                });
+            return Pages.subPages[name]
         }
     };
 })();

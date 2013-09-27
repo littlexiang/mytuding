@@ -64,7 +64,7 @@ Modules.user.home = (function () {
     };
 
     return function () {
-        App.showPage('home');
+        App.getPage('home');
         Client.userDetail();
     }
 })();
