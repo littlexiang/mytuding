@@ -57,7 +57,14 @@ Modules.user.home = (function () {
     Callbacks.v2_user_photos = function (rsp) {
         var $home = App.getPage('home');
         $home.children('.user-home-photos').remove();
-        var $thumbs = App.render(templates.thumbs, rsp.data.photos);
+
+        var $thumbs = App.render(templates.thumbs);
+        var $ul = $thumbs.find('ul');
+        rsp.data.photos.list.forEach(function (li) {
+            App.render(templates.thumb, li).tap(function () {
+                Modules.photo.getPhoto(li);
+            }).appendTo($ul);
+        });
         $home.append($thumbs);
         $home.data('next', rsp.data.photos.havenextpage)
             .data('since', rsp.data.photos.since_id);

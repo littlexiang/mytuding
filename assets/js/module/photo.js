@@ -10,7 +10,6 @@ Modules.photo.timeline = (function () {
             .data('next', rsp.data.havenextpage);
 
         $index.find('.loading').remove();
-        var content = $('');
 
         rsp.data.list.forEach(function (li) {
             var $li = App.render(templates.photo, li);
@@ -28,7 +27,7 @@ Modules.photo.timeline = (function () {
             like.tap(likeFunc);
 
             $li.find('a.op-comment').tap(function () {
-                Modules.photo.commentForm($li.data('id'), this);
+                Modules.photo.getPhoto(li);
             });
 
             photo.doubleTap(function (e) {
@@ -39,16 +38,7 @@ Modules.photo.timeline = (function () {
                         heart.animate({opacity: 0}, 200, 'ease-out');
                     }, 500);
                 });
-                e.stopPropagation();
-                e.preventDefault();
-                return false;
-            }).tap(function (e) {
-                    return false;
-                    Modules.photo.getPhoto(li);
-                    e.stopPropagation();
-                    e.preventDefault();
-                    return false;
-                });
+            });
 
             $index.append($li);
         });

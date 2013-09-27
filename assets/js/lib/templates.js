@@ -71,8 +71,5 @@ templates.home = '<div class="user-home-body">\
     </div>\
 </div>';
 
-templates.thumbs = '<div class="user-home-photos">\
-<ul class="thumbs list-inline">\
-{{#list}}<li><img class="img-responsive" src="{{getThumb thumbnail_url "w240"}}" /></li>{{/list}}\
-</ul>\
-</div>';
+templates.thumbs = '<div class="user-home-photos"><ul class="thumbs"></ul></div>';
+templates.thumb = '<li><img class="img-responsive" src="{{getThumb thumbnail_url "w240"}}" /></li>';

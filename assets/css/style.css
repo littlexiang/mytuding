@@ -91,7 +91,7 @@ h4, h5, h6 {
 }
 
 .photo-detail-wrapper {
-    margin: 25px auto 0 auto;
+    margin: 20px auto 0 auto;
     box-shadow: 0 2px 4px 0 #ccc;
     background-color: #ffffff;
     max-width: 616px;
@@ -202,6 +202,16 @@ h4, h5, h6 {
 .subpage {
     left: 100%;
     z-index: 99;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    min-height: 100%;
+    background-color: #f2f2f2;
+    outline: 0 none;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
 }
 
 #page-body::-webkit-scrollbar, #subpage-body::-webkit-scrollbar {
@@ -386,21 +396,34 @@ h4, h5, h6 {
     font-style: italic;
 }
 
+.user-home-photos{
+    overflow-x: hidden;
+}
+
 ul.thumbs {
-    padding-left: 1.5625%;
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    border: 0 none;
 }
 
 ul.thumbs li {
+    float: left;
     position: relative;
-    width: 31.75%;
+    width: 32.5%;
     overflow: hidden;
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 1.5625%;
-    margin-bottom: 0;
+    margin:0 1.25% 1.25% 0;
     background-color: #fff;
     padding: 0;
     border: 1px solid #dddddd;
+    line-height: 0;
+    list-style: none;
+    list-style-position: inside;
+}
+
+ul.thumbs li:nth-child(3n) {
+    margin-right: 0;
 }
 
 ul.thumbs li img {
