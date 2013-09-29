@@ -33,11 +33,13 @@ Modules.photo.timeline = (function () {
             photo.doubleTap(function (e) {
                 var heart = App.render(templates.likeHeart).appendTo(photo);
                 like.triggerHandler('tap');
-                heart.animate({opacity: 1}, 200, 'ease-in', function () {
+                heart.animate({opacity: 1}, 200, 'ease-in',function () {
                     setTimeout(function () {
                         heart.animate({opacity: 0}, 200, 'ease-out');
                     }, 500);
-                });
+                }).singleTap(function () {
+                        Modules.photo.getPhoto(li);
+                    });
             });
 
             $index.append($li);
